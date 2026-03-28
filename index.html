@@ -451,7 +451,6 @@ let allProperties = [];
 let filteredProperties = [];
 let currentImages = [];
 let lightboxIndex = 0;
-let lightboxInHistory = false;
 
 // ── CSV ──────────────────────────────────────────────
 // פרסר מלא — תומך בשדות עם פסיקים, מרכאות ושורות חדשות בתוך תא
@@ -628,7 +627,7 @@ function renderGrid() {
 }
 
 // ── Property Page ─────────────────────────────────────
-function openProperty(index) {
+function openProperty(index, pushHistory = true) {
   const p = filteredProperties[index];
   document.getElementById('propNavTitle').textContent = p['כתובת'];
   document.getElementById('propTitle').textContent    = p['כתובת'];
@@ -676,23 +675,34 @@ function openProperty(index) {
   const mapAddr = encodeURIComponent(`${p['כתובת']} ${p['עיר'] || ''} ישראל`);
   document.getElementById('propMap').src = `https://maps.google.com/maps?q=${mapAddr}&output=embed&z=15`;
   loadGallery(p['תמונות']);
-  history.pushState({ prop: true }, '');
+  if (pushHistory) history.pushState({ view: 'property', index }, '');
   document.getElementById('propertyPage').classList.add('active');
   document.body.style.overflow = 'hidden';
   document.getElementById('propertyPage').scrollTop = 0;
 }
+
+let lightboxInHistory = false;
+
 
 function closePropPage() {
   history.back();
 }
 
 window.addEventListener('popstate', (e) => {
-  if (e.state && e.state.prop) {
-    // חזרנו לסטייט של הנכס — סגור רק לייטבוקס
+  const view = e.state?.view;
+  if (view === 'lightbox') {
+    // קדימה ללייטבוקס
+    document.getElementById('lightbox').classList.add('active');
+    lightboxInHistory = true;
+  } else if (view === 'property') {
+    // אחורה מלייטבוקס — OR קדימה מהדף הראשי
     document.getElementById('lightbox').classList.remove('active');
     lightboxInHistory = false;
+    if (!document.getElementById('propertyPage').classList.contains('active')) {
+      openProperty(e.state.index, false);
+    }
   } else {
-    // חזרנו לדף הראשי — סגור הכל
+    // אחורה לדף הראשי
     document.getElementById('lightbox').classList.remove('active');
     document.getElementById('propertyPage').classList.remove('active');
     document.body.style.overflow = '';
@@ -748,7 +758,7 @@ function openLightbox(index) {
   document.getElementById('lightbox').classList.add('active');
   updateLightboxCounter();
   if (!lightboxInHistory) {
-    history.pushState({ lightbox: true }, '');
+    history.pushState({ view: 'lightbox' }, '');
     lightboxInHistory = true;
   }
 }
