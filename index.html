@@ -628,6 +628,7 @@ function renderGrid() {
 
 // ── Property Page ─────────────────────────────────────
 function openProperty(index, pushHistory = true) {
+  currentPropertyIndex = index;
   const p = filteredProperties[index];
   document.getElementById('propNavTitle').textContent = p['כתובת'];
   document.getElementById('propTitle').textContent    = p['כתובת'];
@@ -681,33 +682,34 @@ function openProperty(index, pushHistory = true) {
   document.getElementById('propertyPage').scrollTop = 0;
 }
 
-let lightboxInHistory = false;
-
+let currentPropertyIndex = null;
 
 function closePropPage() {
   history.back();
 }
 
 window.addEventListener('popstate', (e) => {
-  const view = e.state?.view;
-  if (view === 'lightbox') {
-    // קדימה ללייטבוקס
-    document.getElementById('lightbox').classList.add('active');
-    lightboxInHistory = true;
-  } else if (view === 'property') {
-    // אחורה מלייטבוקס — OR קדימה מהדף הראשי
+  // אם לייטבוקס פתוח — סגור אותו והחזר את ה-state של הנכס
+  if (document.getElementById('lightbox').classList.contains('active')) {
     document.getElementById('lightbox').classList.remove('active');
-    lightboxInHistory = false;
+    if (currentPropertyIndex !== null) {
+      history.pushState({ view: 'property', index: currentPropertyIndex }, '');
+    }
+    return;
+  }
+
+  const view = e.state?.view;
+  if (view === 'property') {
+    // קדימה לנכס
     if (!document.getElementById('propertyPage').classList.contains('active')) {
       openProperty(e.state.index, false);
     }
   } else {
-    // אחורה לדף הראשי
-    document.getElementById('lightbox').classList.remove('active');
+    // אחורה לדף הראשי — סגור הכל
     document.getElementById('propertyPage').classList.remove('active');
     document.body.style.overflow = '';
     document.getElementById('propMap').src = '';
-    lightboxInHistory = false;
+    currentPropertyIndex = null;
   }
 });
 
@@ -757,17 +759,9 @@ function openLightbox(index) {
   document.getElementById('lightboxImg').src = currentImages[index];
   document.getElementById('lightbox').classList.add('active');
   updateLightboxCounter();
-  if (!lightboxInHistory) {
-    history.pushState({ view: 'lightbox' }, '');
-    lightboxInHistory = true;
-  }
 }
 function closeLightbox() {
   document.getElementById('lightbox').classList.remove('active');
-  if (lightboxInHistory) {
-    lightboxInHistory = false;
-    history.back();
-  }
 }
 function lightboxPrev() {
   lightboxIndex = (lightboxIndex + 1) % currentImages.length;
