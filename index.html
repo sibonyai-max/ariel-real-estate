@@ -195,7 +195,7 @@ nav ul a:hover { color: #fff; }
 .lightbox img { max-width: 90%; max-height: 90vh; object-fit: contain; border-radius: 2px; }
 .lightbox-close { position: absolute; top: 20px; left: 20px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #fff; width: 40px; height: 40px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 50%; backdrop-filter: blur(4px); }
 .lightbox-close:hover { background: rgba(255,255,255,0.3); }
-.lightbox-counter { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.5); color: #fff; font-size: 14px; font-family: 'Heebo', sans-serif; padding: 6px 18px; border-radius: 20px; letter-spacing: 2px; backdrop-filter: blur(4px); }
+.lightbox-counter { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.5); color: #fff; font-size: 14px; font-family: 'Heebo', sans-serif; padding: 6px 18px; border-radius: 20px; letter-spacing: 2px; backdrop-filter: blur(4px); direction: ltr; }
 .lightbox-prev, .lightbox-next { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #fff; width: 50px; height: 50px; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 50%; backdrop-filter: blur(4px); transition: background 0.2s; }
 .lightbox-prev:hover, .lightbox-next:hover { background: rgba(255,255,255,0.3); }
 .lightbox-prev { right: 20px; }
@@ -451,6 +451,7 @@ let allProperties = [];
 let filteredProperties = [];
 let currentImages = [];
 let lightboxIndex = 0;
+let lightboxInHistory = false;
 
 // ── CSV ──────────────────────────────────────────────
 // פרסר מלא — תומך בשדות עם פסיקים, מרכאות ושורות חדשות בתוך תא
@@ -685,11 +686,19 @@ function closePropPage() {
   history.back();
 }
 
-window.addEventListener('popstate', () => {
-  document.getElementById('lightbox').classList.remove('active');
-  document.getElementById('propertyPage').classList.remove('active');
-  document.body.style.overflow = '';
-  document.getElementById('propMap').src = '';
+window.addEventListener('popstate', (e) => {
+  if (e.state && e.state.prop) {
+    // חזרנו לסטייט של הנכס — סגור רק לייטבוקס
+    document.getElementById('lightbox').classList.remove('active');
+    lightboxInHistory = false;
+  } else {
+    // חזרנו לדף הראשי — סגור הכל
+    document.getElementById('lightbox').classList.remove('active');
+    document.getElementById('propertyPage').classList.remove('active');
+    document.body.style.overflow = '';
+    document.getElementById('propMap').src = '';
+    lightboxInHistory = false;
+  }
 });
 
 // ── Gallery ───────────────────────────────────────────
@@ -738,9 +747,17 @@ function openLightbox(index) {
   document.getElementById('lightboxImg').src = currentImages[index];
   document.getElementById('lightbox').classList.add('active');
   updateLightboxCounter();
+  if (!lightboxInHistory) {
+    history.pushState({ lightbox: true }, '');
+    lightboxInHistory = true;
+  }
 }
 function closeLightbox() {
   document.getElementById('lightbox').classList.remove('active');
+  if (lightboxInHistory) {
+    lightboxInHistory = false;
+    history.back();
+  }
 }
 function lightboxPrev() {
   lightboxIndex = (lightboxIndex + 1) % currentImages.length;
