@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -59,6 +59,9 @@ nav ul a:hover { color: #fff; }
 .card-btn:hover { background: #111; color: #fff; }
 .props-counter { text-align: center; color: #999; font-size: 13px; margin-bottom: 20px; letter-spacing: 1px; }
 .no-results { text-align: center; padding: 60px; color: #999; font-size: 18px; grid-column: 1/-1; }
+.loading { text-align: center; padding: 80px; grid-column: 1/-1; }
+.loading-spinner { width: 40px; height: 40px; border: 3px solid #eee; border-top-color: #111; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 20px; }
+@keyframes spin { to { transform: rotate(360deg); } }
 .property-page { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f5f3ef; z-index: 9999; overflow-y: auto; }
 .property-page.active { display: block; }
 .property-nav { background: #111; padding: 20px 60px; display: flex; align-items: center; gap: 20px; position: sticky; top: 0; z-index: 10; }
@@ -123,7 +126,7 @@ footer a { color: #999; text-decoration: none; }
 .chat-window { position: fixed; bottom: 105px; right: 30px; width: 370px; height: 520px; background: #fff; border: 1px solid #eee; box-shadow: 0 10px 40px rgba(0,0,0,0.15); display: none; flex-direction: column; z-index: 8888; border-radius: 12px; overflow: hidden; }
 .chat-window.open { display: flex; }
 .chat-header { background: #111; padding: 18px 20px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-.chat-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: top; border: 2px solid #fff; }
+.chat-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; }
 .chat-header-info { flex: 1; }
 .chat-header-info h4 { color: #fff; font-size: 15px; font-family: 'Playfair Display', serif; }
 .chat-header-info span { color: #aaa; font-size: 12px; }
@@ -135,10 +138,7 @@ footer a { color: #999; text-decoration: none; }
 .msg.typing { background: #fff; border: 1px solid #eee; border-radius: 0 12px 12px 12px; align-self: flex-start; color: #999; font-style: italic; }
 .chat-input-area { padding: 15px; border-top: 1px solid #eee; display: flex; gap: 10px; background: #fff; flex-shrink: 0; }
 .chat-input { flex: 1; border: 1px solid #ddd; padding: 10px 15px; font-size: 14px; font-family: 'Heebo', sans-serif; outline: none; border-radius: 25px; }
-.chat-send { background: #111; color: #fff; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.3s; }
-.loading { text-align: center; padding: 80px; grid-column: 1/-1; }
-.loading-spinner { width: 40px; height: 40px; border: 3px solid #eee; border-top-color: #111; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 20px; }
-@keyframes spin { to { transform: rotate(360deg); } }
+.chat-send { background: #111; color: #fff; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
 @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } .property-specs { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 768px) { nav { padding: 15px 20px; } nav ul { display: none; } .hero h1 { font-size: 36px; } .about { flex-direction: column; padding: 60px 20px; gap: 30px; } .about-img { width: 100%; height: 300px; } .properties { padding: 60px 20px; } .grid { grid-template-columns: 1fr; } .contact { padding: 60px 20px; } .contact-options { gap: 40px; } .chat-window { width: calc(100vw - 20px); right: 10px; bottom: 100px; } .property-nav { padding: 15px 20px; } .property-content { padding: 30px 20px; } .gallery-main { height: 280px; } }
 </style>
@@ -169,7 +169,7 @@ footer a { color: #999; text-decoration: none; }
     <p>מתווך נדל"ן מוסמך ברשת רימקס עם ניסיון מוכח בליווי עסקאות מורכבות והובלת לקוחות לתוצאות מקסימליות.</p>
     <p>בעולם שבו כל עסקת נדל"ן יכולה להיות ההחלטה הכלכלית המשמעותית ביותר בחיים — בחירת האדם שמלווה אותך בתהליך היא קריטית.</p>
     <p>אני מתמחה בליווי אישי ומדויק של מוכרים וקונים באזורי חולון, בת ים, ראשון לציון, תל אביב ובית דגן.</p>
-    <p>אני לא עובד בשיטה של לפרסם ולחכות. אני פועל בגישה אסטרטגית, ממוקדת תוצאה.</p>
+    <p>אני פועל בגישה אסטרטגית ממוקדת תוצאה.</p>
     <p>רוב הלקוחות שלי מגיעים דרך המלצות — וזה לא במקרה.</p>
     <div class="stats">
       <div class="stat"><div class="num">5+</div><div class="label">שנות ניסיון</div></div>
@@ -275,122 +275,301 @@ footer a { color: #999; text-decoration: none; }
   </div>
 </div>
 <script>
-const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vStpBrNoGifPS8MAtXFziZD_xj_vAepH-3zmhj9CUB_P3k-mt4JUce94DqdASpt-c4be8JnYzXY4N2J/pub?gid=0&single=true&output=csv';
-let allProperties = [], filteredProperties = [], currentImages = [], lightboxIndex = 0;
-
-async function loadProperties() {
-  try {
-    const res = await fetch(SHEET_CSV);
-    const csv = await res.text();
-    const rows = csv.trim().split('\n');
-    const headers = rows[0].split(',').map(h => h.trim().replace(/"/g,'').replace(/\r/g,''));
-    allProperties = rows.slice(1).map(row => {
-      const vals = parseCSVRow(row);
-      const obj = {};
-      headers.forEach((h, i) => obj[h] = (vals[i] || '').trim().replace(/"/g, ''));
-      return obj;
-   }).filter(p => p['פעיל'] === 'כן' && p['כתובת']);
-    populateCityFilter();
-    filteredProperties = [...allProperties];
-    renderGrid();
-  } catch(e) {
-    document.getElementById('grid').innerHTML = '<div class="no-results">שגיאה בטעינת הנכסים.</div>';
-  }
-}
+var SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vStpBrNoGifPS8MAtXFziZD_xj_vAepH-3zmhj9CUB_P3k-mt4JUce94DqdASpt-c4be8JnYzXY4N2J/pub?gid=0&single=true&output=csv';
+var allProperties = [];
+var filteredProperties = [];
+var currentImages = [];
+var lightboxIndex = 0;
 
 function parseCSVRow(row) {
-  const result = []; let current = ''; let inQuotes = false;
-  for (let i = 0; i < row.length; i++) {
-    if (row[i] === '"') { inQuotes = !inQuotes; }
-    else if (row[i] === ',' && !inQuotes) { result.push(current); current = ''; }
-    else { current += row[i]; }
+  var result = [];
+  var current = '';
+  var inQuotes = false;
+  for (var i = 0; i < row.length; i++) {
+    var c = row[i];
+    if (c === '"') { inQuotes = !inQuotes; }
+    else if (c === ',' && !inQuotes) { result.push(current); current = ''; }
+    else { current += c; }
   }
   result.push(current);
   return result;
 }
 
+function loadProperties() {
+  fetch(SHEET_CSV)
+    .then(function(r) { return r.text(); })
+    .then(function(csv) {
+      csv = csv.replace(/\r/g, '');
+      var rows = csv.trim().split('\n');
+      var headers = rows[0].split(',').map(function(h) { return h.trim().replace(/"/g, ''); });
+      allProperties = [];
+      for (var i = 1; i < rows.length; i++) {
+        var vals = parseCSVRow(rows[i]);
+        var obj = {};
+        for (var j = 0; j < headers.length; j++) {
+          obj[headers[j]] = (vals[j] || '').trim().replace(/"/g, '');
+        }
+        if (obj['פעיל'] === 'כן' && obj['כתובת']) {
+          allProperties.push(obj);
+        }
+      }
+      populateCityFilter();
+      filteredProperties = allProperties.slice();
+      renderGrid();
+    })
+    .catch(function() {
+      document.getElementById('grid').innerHTML = '<div class="no-results">שגיאה בטעינת הנכסים.</div>';
+    });
+}
+
 function populateCityFilter() {
-  const cities = [...new Set(allProperties.map(p => p['עיר']).filter(Boolean))];
-  const sel = document.getElementById('filterCity');
-  cities.forEach(city => { const opt = document.createElement('option'); opt.value = city; opt.textContent = city; sel.appendChild(opt); });
+  var cities = [];
+  var seen = {};
+  for (var i = 0; i < allProperties.length; i++) {
+    var city = allProperties[i]['עיר'];
+    if (city && !seen[city]) { cities.push(city); seen[city] = true; }
+  }
+  var sel = document.getElementById('filterCity');
+  for (var i = 0; i < cities.length; i++) {
+    var opt = document.createElement('option');
+    opt.value = cities[i];
+    opt.textContent = cities[i];
+    sel.appendChild(opt);
+  }
 }
 
 function applyFilters() {
-  const city = document.getElementById('filterCity').value;
-  const rooms = document.getElementById('filterRooms').value;
-  const price = document.getElementById('filterPrice').value;
-  const status = document.getElementById('filterStatus').value;
-  filteredProperties = allProperties.filter(p => {
+  var city = document.getElementById('filterCity').value;
+  var rooms = document.getElementById('filterRooms').value;
+  var price = document.getElementById('filterPrice').value;
+  var status = document.getElementById('filterStatus').value;
+  filteredProperties = allProperties.filter(function(p) {
     if (city && p['עיר'] !== city) return false;
     if (status && p['סטטוס'] !== status) return false;
-    if (rooms) { const r = parseFloat(p['חדרים']); if (rooms === '5') { if (r < 5) return false; } else { if (Math.floor(r) !== parseFloat(rooms)) return false; } }
-    if (price) { const [min, max] = price.split('-').map(Number); const pr = parseFloat(p['מחיר']); if (pr < min || pr > max) return false; }
+    if (rooms) {
+      var r = parseFloat(p['חדרים']);
+      if (rooms === '5') { if (r < 5) return false; }
+      else { if (Math.floor(r) !== parseFloat(rooms)) return false; }
+    }
+    if (price) {
+      var parts = price.split('-');
+      var min = parseFloat(parts[0]);
+      var max = parseFloat(parts[1]);
+      var pr = parseFloat(p['מחיר']);
+      if (pr < min || pr > max) return false;
+    }
     return true;
   });
   renderGrid();
 }
 
 function resetFilters() {
-  ['filterCity','filterRooms','filterPrice','filterStatus'].forEach(id => document.getElementById(id).value = '');
-  filteredProperties = [...allProperties];
+  document.getElementById('filterCity').value = '';
+  document.getElementById('filterRooms').value = '';
+  document.getElementById('filterPrice').value = '';
+  document.getElementById('filterStatus').value = '';
+  filteredProperties = allProperties.slice();
   renderGrid();
 }
 
-['filterCity','filterRooms','filterPrice','filterStatus'].forEach(id => document.getElementById(id).addEventListener('change', applyFilters));
+document.getElementById('filterCity').addEventListener('change', applyFilters);
+document.getElementById('filterRooms').addEventListener('change', applyFilters);
+document.getElementById('filterPrice').addEventListener('change', applyFilters);
+document.getElementById('filterStatus').addEventListener('change', applyFilters);
 
-function formatPrice(price) { const num = parseFloat(price); if (!num) return ''; return '₪' + num.toLocaleString('he-IL'); }
+function formatPrice(price) {
+  var num = parseFloat(price);
+  if (!num) return '';
+  return '\u20AA' + num.toLocaleString('he-IL');
+}
 
 function getFirstImage(driveUrl) {
   if (!driveUrl) return 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&h=250&fit=crop';
-  const match = driveUrl.match(/folders\/([^/?]+)/);
+  var match = driveUrl.match(/folders\/([^/?]+)/);
   if (!match) return 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&h=250&fit=crop';
   return 'https://drive.google.com/thumbnail?id=' + match[1] + '&sz=w400';
 }
 
 function renderGrid() {
-  const grid = document.getElementById('grid');
-  document.getElementById('propsCounter').textContent = filteredProperties.length ? 'מציג ' + filteredProperties.length + ' נכסים' : '';
-  if (!filteredProperties.length) { grid.innerHTML = '<div class="no-results">לא נמצאו נכסים</div>'; return; }
-  grid.innerHTML = filteredProperties.map((p, i) => {
-    const sc = p['סטטוס'] === 'להשכרה' ? 'rent' : 'sale';
-    return '<div class="card" onclick="openProperty(' + i + ')"><img class="card-img" src="' + getFirstImage(p['תמונות']) + '" alt="' + p['כתובת'] + '" onerror="this.src='https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&h=250&fit=crop'"><div class="card-body"><div class="card-badges"><span class="badge badge-' + sc + '">' + (p['סטטוס'] || 'למכירה') + '</span>' + (p['עיר'] ? '<span class="badge" style="background:#f0ede6;color:#666">' + p['עיר'] + '</span>' : '') + '</div><div class="card-title">' + p['כתובת'] + '</div><div class="card-details">' + (p['חדרים'] ? '<span class="card-detail">🛏 ' + p['חדרים'] + ' חדרים</span>' : '') + (p['מטרים'] ? '<span class="card-detail">📐 ' + p['מטרים'] + ' מ"ר</span>' : '') + (p['קומה'] ? '<span class="card-detail">🏢 קומה ' + p['קומה'] + '</span>' : '') + '</div>' + (p['מחיר'] ? '<div class="card-price">' + formatPrice(p['מחיר']) + '</div>' : '') + '<button class="card-btn">לפרטים נוספים ←</button></div></div>';
-  }).join('');
+  var grid = document.getElementById('grid');
+  var counter = document.getElementById('propsCounter');
+  if (!filteredProperties.length) {
+    grid.innerHTML = '<div class="no-results">לא נמצאו נכסים</div>';
+    counter.textContent = '';
+    return;
+  }
+  counter.textContent = 'מציג ' + filteredProperties.length + ' נכסים';
+  var html = '';
+  for (var i = 0; i < filteredProperties.length; i++) {
+    var p = filteredProperties[i];
+    var sc = p['סטטוס'] === 'להשכרה' ? 'rent' : 'sale';
+    html += '<div class="card" onclick="openProperty(' + i + ')">';
+    html += '<img class="card-img" src="' + getFirstImage(p['תמונות']) + '" alt="' + p['כתובת'] + '" onerror="this.src=\'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&h=250&fit=crop\'">';
+    html += '<div class="card-body">';
+    html += '<div class="card-badges"><span class="badge badge-' + sc + '">' + (p['סטטוס'] || 'למכירה') + '</span>';
+    if (p['עיר']) html += '<span class="badge" style="background:#f0ede6;color:#666">' + p['עיר'] + '</span>';
+    html += '</div>';
+    html += '<div class="card-title">' + p['כתובת'] + '</div>';
+    html += '<div class="card-details">';
+    if (p['חדרים']) html += '<span class="card-detail">🛏 ' + p['חדרים'] + ' חדרים</span>';
+    if (p['מטרים']) html += '<span class="card-detail">📐 ' + p['מטרים'] + ' מ"ר</span>';
+    if (p['קומה']) html += '<span class="card-detail">🏢 קומה ' + p['קומה'] + '</span>';
+    html += '</div>';
+    if (p['מחיר']) html += '<div class="card-price">' + formatPrice(p['מחיר']) + '</div>';
+    html += '<button class="card-btn">לפרטים נוספים ←</button>';
+    html += '</div></div>';
+  }
+  grid.innerHTML = html;
 }
 
-async function openProperty(index) {
-  const p = filteredProperties[index];
+function openProperty(index) {
+  var p = filteredProperties[index];
   document.getElementById('propNavTitle').textContent = p['כתובת'];
   document.getElementById('propTitle').textContent = p['כתובת'];
   document.getElementById('propCity').textContent = p['עיר'] || '';
   document.getElementById('propPrice').textContent = formatPrice(p['מחיר']);
-  const statusEl = document.getElementById('propStatus');
+  var statusEl = document.getElementById('propStatus');
   statusEl.textContent = p['סטטוס'] || 'למכירה';
   statusEl.className = 'property-status ' + (p['סטטוס'] === 'להשכרה' ? 'rent' : 'sale');
-  document.getElementById('propSpecs').innerHTML = (p['חדרים'] ? '<div class="spec"><div class="spec-icon">🛏</div><div class="spec-label">חדרים</div><div class="spec-value">' + p['חדרים'] + '</div></div>' : '') + (p['מטרים'] ? '<div class="spec"><div class="spec-icon">📐</div><div class="spec-label">מ"ר</div><div class="spec-value">' + p['מטרים'] + '</div></div>' : '') + (p['קומה'] ? '<div class="spec"><div class="spec-icon">🏢</div><div class="spec-label">קומה</div><div class="spec-value">' + p['קומה'] + '</div></div>' : '') + (p['כיוון'] ? '<div class="spec"><div class="spec-icon">🧭</div><div class="spec-label">כיוון</div><div class="spec-value">' + p['כיוון'] + '</div></div>' : '');
+  var specs = '';
+  if (p['חדרים']) specs += '<div class="spec"><div class="spec-icon">🛏</div><div class="spec-label">חדרים</div><div class="spec-value">' + p['חדרים'] + '</div></div>';
+  if (p['מטרים']) specs += '<div class="spec"><div class="spec-icon">📐</div><div class="spec-label">מ"ר</div><div class="spec-value">' + p['מטרים'] + '</div></div>';
+  if (p['קומה']) specs += '<div class="spec"><div class="spec-icon">🏢</div><div class="spec-label">קומה</div><div class="spec-value">' + p['קומה'] + '</div></div>';
+  if (p['כיוון']) specs += '<div class="spec"><div class="spec-icon">🧭</div><div class="spec-label">כיוון</div><div class="spec-value">' + p['כיוון'] + '</div></div>';
+  document.getElementById('propSpecs').innerHTML = specs;
   document.getElementById('propDesc').innerHTML = p['תיאור'] ? '<h3>תיאור הנכס</h3><p>' + p['תיאור'] + '</p>' : '';
-  const mapAddr = encodeURIComponent(p['כתובת'] + ' ' + (p['עיר'] || '') + ' ישראל');
+  var mapAddr = encodeURIComponent(p['כתובת'] + ' ' + (p['עיר'] || '') + ' ישראל');
   document.getElementById('propMap').src = 'https://maps.google.com/maps?q=' + mapAddr + '&output=embed&z=15';
-  await loadGallery(p['תמונות']);
+  loadGallery(p['תמונות']);
   document.getElementById('propertyPage').classList.add('active');
   document.body.style.overflow = 'hidden';
   document.getElementById('propertyPage').scrollTop = 0;
 }
 
-function closePropPage() { document.getElementById('propertyPage').classList.remove('active'); document.body.style.overflow = ''; document.getElementById('propMap').src = ''; }
+function closePropPage() {
+  document.getElementById('propertyPage').classList.remove('active');
+  document.body.style.overflow = '';
+  document.getElementById('propMap').src = '';
+}
 
-async function loadGallery(driveUrl) {
-  const gallery = document.getElementById('propGallery');
+function loadGallery(driveUrl) {
+  var gallery = document.getElementById('propGallery');
   gallery.innerHTML = '<div class="gallery-loading">טוען תמונות...</div>';
   currentImages = [];
   if (!driveUrl) { gallery.innerHTML = '<div class="gallery-loading">אין תמונות</div>'; return; }
-  const match = driveUrl.match(/folders\/([^/?]+)/);
+  var match = driveUrl.match(/folders\/([^/?]+)/);
   if (!match) { gallery.innerHTML = '<div class="gallery-loading">שגיאה</div>'; return; }
-  const folderId = match[1];
-  try {
-    const res = await fetch('https://www.googleapis.com/drive/v3/files?q='' + folderId + ''+in+parents+and+mimeType+contains+'image'&key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&fields=files(id,name)');
-    const data = await res.json();
-    if (data.files && data.files.length > 0) { currentImages = data.files.map(f => 'https://drive.google.com/thumbnail?id=' + f.id + '&sz=w1200'); }
-    else { currentImages = ['https://drive.google.com/thumbnail?id=' + folderId + '&sz=w1200']; }
-  } catch(e) { currentImages = ['https://drive.google.com/thumbnail?id=' + folderId + '&sz=w1200']; }
-  renderGallery();
+  var folderId = match[1];
+  fetch('https://www.googleapis.com/drive/v3/files?q=%27' + folderId + '%27+in+parents+and+mimeType+contains+%27image%27&key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&fields=files(id,name)')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.files && data.files.length > 0) {
+        currentImages = data.files.map(function(f) { return 'https://drive.google.com/thumbnail?id=' + f.id + '&sz=w1200'; });
+      } else {
+        currentImages = ['https://drive.google.com/thumbnail?id=' + folderId + '&sz=w1200'];
+      }
+      renderGallery();
+    })
+    .catch(function() {
+      currentImages = ['https://drive.google.com/thumbnail?id=' + folderId + '&sz=w1200'];
+      renderGallery();
+    });
 }
+
+function renderGallery() {
+  var gallery = document.getElementById('propGallery');
+  if (!currentImages.length) { gallery.innerHTML = '<div class="gallery-loading">אין תמונות</div>'; return; }
+  var thumbs = '';
+  for (var i = 0; i < currentImages.length; i++) {
+    thumbs += '<img class="gallery-thumb ' + (i === 0 ? 'active' : '') + '" src="' + currentImages[i] + '" onclick="selectImage(' + i + ')" onerror="this.style.display=\'none\'">';
+  }
+  gallery.innerHTML = '<img class="gallery-main" id="galleryMain" src="' + currentImages[0] + '" onclick="openLightbox(0)" onerror="this.src=\'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=480&fit=crop\'"><div class="gallery-thumbs">' + thumbs + '</div>';
+}
+
+function selectImage(index) {
+  document.getElementById('galleryMain').src = currentImages[index];
+  var thumbs = document.querySelectorAll('.gallery-thumb');
+  for (var i = 0; i < thumbs.length; i++) { thumbs[i].classList.toggle('active', i === index); }
+}
+
+function openLightbox(index) {
+  lightboxIndex = index;
+  document.getElementById('lightboxImg').src = currentImages[index];
+  document.getElementById('lightbox').classList.add('active');
+}
+
+function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); }
+
+function lightboxNext() {
+  lightboxIndex = (lightboxIndex - 1 + currentImages.length) % currentImages.length;
+  document.getElementById('lightboxImg').src = currentImages[lightboxIndex];
+}
+
+function lightboxPrev() {
+  lightboxIndex = (lightboxIndex + 1) % currentImages.length;
+  document.getElementById('lightboxImg').src = currentImages[lightboxIndex];
+}
+
+function sendWhatsApp() {
+  var name = document.getElementById('contactName').value;
+  var phone = document.getElementById('contactPhone').value;
+  var msg = document.getElementById('contactMsg').value;
+  var prop = document.getElementById('propTitle').textContent;
+  window.open('https://wa.me/972535359767?text=' + encodeURIComponent('שלום אריאל, אני מעוניין בנכס: ' + prop + '\nשם: ' + name + '\nטלפון: ' + phone + '\n' + msg), '_blank');
+}
+
+var SYSTEM_PROMPT = 'אתה הבוט של אריאל סיבוני, מתווך נדל"ן מוסמך ברשת ריימקס. תמיד תהיה ידידותי ומקצועי ובעברית. בסוף כל תשובה הצע ליצור קשר עם אריאל: 053-535-9767';
+var chatHistory = [];
+var chatOpen = false;
+
+function addMsg(text, type) {
+  var msgs = document.getElementById('chatMessages');
+  var div = document.createElement('div');
+  div.className = 'msg ' + type;
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function sendMessage(userText) {
+  if (!userText.trim()) return;
+  addMsg(userText, 'user');
+  chatHistory.push({ role: 'user', content: userText });
+  document.getElementById('chatInput').value = '';
+  var typingDiv = addMsg('מקליד...', 'typing');
+  fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1000, system: SYSTEM_PROMPT, messages: chatHistory })
+  }).then(function(r) { return r.json(); })
+    .then(function(data) {
+      typingDiv.remove();
+      var reply = data.content[0].text;
+      addMsg(reply, 'bot');
+      chatHistory.push({ role: 'assistant', content: reply });
+    })
+    .catch(function() {
+      typingDiv.remove();
+      addMsg('מצטער, שגיאה. התקשר ל-053-535-9767', 'bot');
+    });
+}
+
+document.getElementById('chatBubble').addEventListener('click', function() {
+  chatOpen = !chatOpen;
+  document.getElementById('chatWindow').classList.toggle('open', chatOpen);
+  if (chatOpen && !chatHistory.length) {
+    setTimeout(function() { addMsg('שלום! 👋 אני הבוט של אריאל. איזה נכס אתה מחפש? 🏠', 'bot'); }, 300);
+  }
+});
+document.getElementById('chatClose').addEventListener('click', function() {
+  chatOpen = false;
+  document.getElementById('chatWindow').classList.remove('open');
+});
+document.getElementById('chatSend').addEventListener('click', function() { sendMessage(document.getElementById('chatInput').value); });
+document.getElementById('chatInput').addEventListener('keypress', function(e) { if (e.key === 'Enter') sendMessage(document.getElementById('chatInput').value); });
+
+loadProperties();
+</script>
+</body>
+</html>
