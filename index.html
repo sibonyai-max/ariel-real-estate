@@ -631,6 +631,7 @@ function openProperty(index) {
   statusEl.textContent = p['סטטוס'] || 'למכירה';
   statusEl.className   = `property-status ${p['סטטוס'] === 'להשכרה' ? 'rent' : 'sale'}`;
   const SVG = {
+    neighborhood: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 11V5l-3-3-3 3v2H3v14h18V11h-6zm-8 8H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm6 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V9h2v2zm0-4h-2V5h2v2zm6 12h-2v-2h2v2zm0-4h-2v-2h2v2z"/></svg>`,
     rooms:    `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4z"/></svg>`,
     area:     `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 3v8h2V5h6V3H3zm0 18h8v-2H5v-6H3v8zm18-8h-2v6h-6v2h8v-8zm0-10h-8v2h6v6h2V3z"/></svg>`,
     floor:    `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 11V3H7v4H3v14h8v-4h2v4h8V11h-4zm-10 4H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V5h2v2zm4 8H9v-2h2v2zm0-4H9v-2h2v2zm0-4H9V5h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2z"/></svg>`,
@@ -642,13 +643,14 @@ function openProperty(index) {
   const spec = (icon, label, val) =>
     `<div class="spec"><div class="spec-icon">${SVG[icon]}</div><div class="spec-label">${label}</div><div class="spec-value">${val}</div></div>`;
   document.getElementById('propSpecs').innerHTML = [
-    p['חדרים']          && spec('rooms',    'חדרים',          p['חדרים']),
-    p['מטרים']          && spec('area',     'גודל במ"ר',      p['מטרים']),
-    p['קומה']           && spec('floor',    'קומה',           p['קומה']),
-    p['קומות בבניין']   && spec('building', 'קומות בבניין',   p['קומות בבניין']),
-    p['כיוון']          && spec('compass',  'כיווני אוויר',   p['כיוון']),
-    p['תאריך פינוי']    && spec('calendar', 'תאריך פינוי',    p['תאריך פינוי']),
-    p['כתובת']          && spec('location', 'כתובת',          p['כתובת'] + (p['עיר'] ? ', ' + p['עיר'] : '')),
+    p['חדרים']          && spec('rooms',        'חדרים',          p['חדרים']),
+    p['מטרים']          && spec('area',          'גודל במ"ר',      p['מטרים']),
+    p['קומה']           && spec('floor',         'קומה',           p['קומה']),
+    p['קומות בבניין']   && spec('building',      'קומות בבניין',   p['קומות בבניין']),
+    p['כיוון']          && spec('compass',       'כיווני אוויר',   p['כיוון']),
+    p['תאריך פינוי']    && spec('calendar',      'תאריך פינוי',    p['תאריך פינוי']),
+    p['כתובת']          && spec('location',      'כתובת',          p['כתובת'] + (p['עיר'] ? ', ' + p['עיר'] : '')),
+                           spec('neighborhood',  'שכונה',          p['שכונה'] || ''),
   ].filter(Boolean).join('');
 
   // Price bar below specs
