@@ -1,465 +1,396 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>אריאל סיבוני | מתווך נדל"ן - ריימקס</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Heebo:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Heebo', sans-serif; background: #f5f3ef; color: #111; }
-        h1, h2, h3, .logo { font-family: 'Playfair Display', serif; }
-
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 60px; background: #111; position: fixed; width: 100%; top: 0; z-index: 100; border-bottom: 1px solid #333; }
-        .logo { font-size: 22px; font-weight: 700; color: #fff; letter-spacing: 1px; }
-        .logo span { color: #aaa; font-size: 13px; display: block; font-weight: 300; font-family: 'Heebo', sans-serif; letter-spacing: 2px; }
-        nav ul { list-style: none; display: flex; gap: 35px; align-items: center; }
-        nav ul a { color: #ccc; text-decoration: none; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; transition: color 0.3s; }
-        nav ul a:hover { color: #fff; }
-        .nav-whatsapp { background: transparent; color: #fff !important; padding: 10px 22px; letter-spacing: 1px; transition: all 0.3s !important; border: 1px solid rgba(255,255,255,0.4); }
-        .nav-whatsapp:hover { background: rgba(255,255,255,0.1); }
-
-        .hero { height: 100vh; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('city.png') center/cover; display: flex; align-items: center; justify-content: center; text-align: center; }
-        .hero h1 { font-size: 64px; color: #fff; margin-bottom: 20px; font-weight: 700; line-height: 1.2; letter-spacing: 2px; }
-        .hero p { font-size: 18px; color: #ccc; margin-bottom: 10px; font-weight: 300; letter-spacing: 1px; }
-        .hero .sub { font-size: 13px; color: #999; margin-bottom: 50px; letter-spacing: 3px; text-transform: uppercase; }
-        .hero-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
-
-        .btn { background: transparent; color: #fff; padding: 15px 50px; border: 1px solid rgba(255,255,255,0.6); font-size: 15px; font-weight: 300; cursor: pointer; text-decoration: none; letter-spacing: 4px; text-transform: uppercase; display: inline-block; transition: all 0.5s ease; font-family: 'Playfair Display', serif; }
-        .btn:hover { background: #fff; color: #111; border-color: #fff; letter-spacing: 5px; }
-        .btn-dark { background: #111; color: #fff; padding: 15px 35px; border: none; font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; letter-spacing: 2px; text-transform: uppercase; display: inline-block; transition: all 0.3s; font-family: 'Heebo', sans-serif; }
-        .btn-dark:hover { background: #333; }
-
-        .about { padding: 100px 60px; background: #eeebe4; display: flex; align-items: flex-start; gap: 60px; flex-wrap: nowrap; }
-        .about-img { width: 340px; height: 460px; object-fit: cover; object-position: top; flex-shrink: 0; filter: grayscale(20%); }
-        .about-text { flex: 1; }
-        .about-text h2 { font-size: 36px; color: #111; margin-bottom: 20px; font-weight: 700; }
-        .about-text p { font-size: 19px; color: #333; line-height: 2.1; margin-bottom: 22px; font-weight: 300; }
-        .stats { display: flex; gap: 50px; margin-top: 40px; flex-wrap: wrap; }
-        .stat { text-align: center; }
-        .stat .num { font-size: 44px; font-weight: 700; color: #111; font-family: 'Playfair Display', serif; }
-        .stat .label { font-size: 13px; color: #999; letter-spacing: 2px; text-transform: uppercase; margin-top: 5px; }
-        .divider { width: 50px; height: 2px; background: #111; margin-bottom: 25px; }
-
-        .properties { padding: 100px 60px; background: #f5f3ef; }
-        .properties h2 { text-align: center; font-size: 40px; color: #111; margin-bottom: 15px; font-weight: 700; }
-        .properties .subtitle { text-align: center; color: #777; margin-bottom: 60px; letter-spacing: 1px; font-size: 18px; }
-
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
-        .card { background: #faf8f5; overflow: hidden; border: 1px solid #eee; transition: all 0.3s; cursor: pointer; }
-        .card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); border-color: #111; }
-        .card img { width: 100%; height: 200px; object-fit: cover; transition: filter 0.3s; background: #ddd; }
-        .card:hover img { filter: brightness(1.05); }
-        .card-body { padding: 22px; }
-        .card-body h3 { font-size: 17px; color: #111; margin-bottom: 15px; font-family: 'Playfair Display', serif; }
-        .card-footer { display: flex; justify-content: flex-end; align-items: center; margin-top: 10px; }
-        .card-btn { background: none; border: 1px solid #111; color: #111; padding: 10px 20px; cursor: pointer; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s; font-family: 'Heebo', sans-serif; width: 100%; text-align: center; }
-        .card-btn:hover { background: #111; color: #fff; }
-
-        .load-more-wrap { text-align: center; margin-top: 50px; }
-        .load-more-btn { background: #111; color: #fff; padding: 16px 60px; border: none; font-size: 15px; font-weight: 500; cursor: pointer; letter-spacing: 3px; text-transform: uppercase; transition: all 0.3s; font-family: 'Heebo', sans-serif; }
-        .load-more-btn:hover { background: #333; }
-        .load-more-btn:disabled { background: #999; cursor: default; }
-        .props-counter { text-align: center; color: #999; font-size: 13px; margin-bottom: 30px; letter-spacing: 1px; }
-
-        .popup-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; align-items: center; padding: 20px; }
-        .popup-overlay.active { display: flex; }
-        .popup-box { background: #fff; width: 95%; max-width: 950px; height: 88vh; display: flex; flex-direction: column; overflow: hidden; }
-        .popup-header { display: flex; justify-content: space-between; align-items: center; padding: 18px 28px; border-bottom: 1px solid #eee; background: #111; flex-shrink: 0; }
-        .popup-header span { color: #fff; font-weight: 600; font-size: 16px; font-family: 'Playfair Display', serif; }
-        .popup-close-btn { background: transparent; border: 1px solid #555; color: #fff; font-size: 18px; cursor: pointer; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
-        .popup-close-btn:hover { background: #fff; color: #111; }
-        .popup-frame { flex: 1; border: none; width: 100%; }
-
-        .contact { padding: 100px 60px; background: #111; text-align: center; }
-        .contact h2 { font-size: 40px; color: #fff; margin-bottom: 15px; font-weight: 700; }
-        .contact .subtitle { color: #999; margin-bottom: 50px; font-size: 14px; letter-spacing: 1px; }
-        .contact-options { display: flex; gap: 120px; justify-content: center; flex-wrap: wrap; margin-bottom: 60px; align-items: center; }
-        .contact-option { text-align: center; }
-        .contact-option a { color: #fff; font-size: 16px; font-weight: 300; text-decoration: none; display: block; margin-top: 12px; letter-spacing: 3px; text-transform: uppercase; transition: color 0.4s; }
-        .contact-option a:hover { color: rgba(255,255,255,0.5); }
-        .contact-option .icon { font-size: 28px; opacity: 0.7; }
-        .contact-ariel-img { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; object-position: top; opacity: 0.6; transition: opacity 0.4s; filter: grayscale(30%); display: block; margin: 0 auto; }
-        .contact-ariel-img:hover { opacity: 0.3; }
-        .contact form { max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
-        .contact input, .contact textarea { padding: 15px 20px; background: #1a1a1a; border: 1px solid #333; color: #fff; font-size: 15px; font-family: 'Heebo', sans-serif; }
-        .contact input::placeholder, .contact textarea::placeholder { color: #666; }
-        .contact textarea { height: 130px; resize: vertical; }
-
-        footer { text-align: center; padding: 30px; background: #000; color: #555; border-top: 1px solid #222; font-size: 13px; letter-spacing: 1px; }
-        footer a { color: #999; text-decoration: none; }
-
-        .chat-bubble { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #111; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 8888; box-shadow: 0 4px 20px rgba(0,0,0,0.3); transition: transform 0.3s; }
-        .chat-bubble:hover { transform: scale(1.1); }
-        .chat-bubble svg { width: 28px; height: 28px; fill: #fff; }
-        .chat-notification { position: absolute; top: -3px; right: -3px; width: 16px; height: 16px; background: #25D366; border-radius: 50%; border: 2px solid #fff; }
-        .chat-window { position: fixed; bottom: 105px; right: 30px; width: 370px; height: 520px; background: #fff; border: 1px solid #eee; box-shadow: 0 10px 40px rgba(0,0,0,0.15); display: none; flex-direction: column; z-index: 8888; border-radius: 12px; overflow: hidden; }
-        .chat-window.open { display: flex; }
-        .chat-header { background: #111; padding: 18px 20px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-        .chat-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: top; border: 2px solid #fff; }
-        .chat-header-info { flex: 1; }
-        .chat-header-info h4 { color: #fff; font-size: 15px; font-family: 'Playfair Display', serif; }
-        .chat-header-info span { color: #aaa; font-size: 12px; }
-        .chat-close { background: none; border: none; color: #aaa; font-size: 20px; cursor: pointer; }
-        .chat-close:hover { color: #fff; }
-        .chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; background: #f9f9f9; }
-        .msg { max-width: 80%; padding: 12px 15px; font-size: 14px; line-height: 1.6; border-radius: 12px; }
-        .msg.bot { background: #fff; color: #111; align-self: flex-start; border: 1px solid #eee; border-radius: 0 12px 12px 12px; }
-        .msg.user { background: #111; color: #fff; align-self: flex-end; border-radius: 12px 0 12px 12px; }
-        .msg.typing { background: #fff; border: 1px solid #eee; border-radius: 0 12px 12px 12px; align-self: flex-start; color: #999; font-style: italic; }
-        .chat-input-area { padding: 15px; border-top: 1px solid #eee; display: flex; gap: 10px; background: #fff; flex-shrink: 0; }
-        .chat-input { flex: 1; border: 1px solid #ddd; padding: 10px 15px; font-size: 14px; font-family: 'Heebo', sans-serif; outline: none; border-radius: 25px; }
-        .chat-input:focus { border-color: #111; }
-        .chat-send { background: #111; color: #fff; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.3s; }
-        .chat-send:hover { background: #333; }
-
-        @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 768px) {   nav { padding: 15px 20px; }   nav ul { display: none; }   .hero h1 { font-size: 36px; letter-spacing: 1px; }   .hero p { font-size: 15px; }   .about { flex-direction: column; padding: 60px 20px; gap: 30px; }   .about-img { width: 100%; height: 300px; }   .stats { gap: 25px; justify-content: center; }   .properties { padding: 60px 20px; }   .properties h2 { font-size: 28px; }   .grid { grid-template-columns: 1fr; }   .contact { padding: 60px 20px; }   .contact h2 { font-size: 28px; }   .contact-options { gap: 40px; }   .chat-window { width: calc(100vw - 20px); right: 10px; bottom: 100px; }   .chat-bubble { right: 15px; bottom: 20px; }   .btn { padding: 12px 30px; font-size: 13px; letter-spacing: 2px; } 
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>אריאל סיבוני | מתווך נדל"ן - ריימקס</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Heebo:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Heebo', sans-serif; background: #f5f3ef; color: #111; }
+h1, h2, h3, .logo { font-family: 'Playfair Display', serif; }
+nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 60px; background: #111; position: fixed; width: 100%; top: 0; z-index: 100; border-bottom: 1px solid #333; }
+.logo { font-size: 22px; font-weight: 700; color: #fff; letter-spacing: 1px; }
+.logo span { color: #aaa; font-size: 13px; display: block; font-weight: 300; font-family: 'Heebo', sans-serif; letter-spacing: 2px; }
+nav ul { list-style: none; display: flex; gap: 35px; align-items: center; }
+nav ul a { color: #ccc; text-decoration: none; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; transition: color 0.3s; }
+nav ul a:hover { color: #fff; }
+.nav-whatsapp { background: transparent; color: #fff !important; padding: 10px 22px; letter-spacing: 1px; transition: all 0.3s !important; border: 1px solid rgba(255,255,255,0.4); }
+.hero { height: 100vh; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('city.png') center/cover; display: flex; align-items: center; justify-content: center; text-align: center; }
+.hero h1 { font-size: 64px; color: #fff; margin-bottom: 20px; font-weight: 700; line-height: 1.2; letter-spacing: 2px; }
+.hero p { font-size: 18px; color: #ccc; margin-bottom: 10px; font-weight: 300; letter-spacing: 1px; }
+.hero .sub { font-size: 13px; color: #999; margin-bottom: 50px; letter-spacing: 3px; text-transform: uppercase; }
+.btn { background: transparent; color: #fff; padding: 15px 50px; border: 1px solid rgba(255,255,255,0.6); font-size: 15px; font-weight: 300; cursor: pointer; text-decoration: none; letter-spacing: 4px; text-transform: uppercase; display: inline-block; transition: all 0.5s ease; font-family: 'Playfair Display', serif; }
+.btn:hover { background: #fff; color: #111; border-color: #fff; }
+.btn-dark { background: #111; color: #fff; padding: 15px 35px; border: none; font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; letter-spacing: 2px; text-transform: uppercase; display: inline-block; transition: all 0.3s; font-family: 'Heebo', sans-serif; }
+.btn-dark:hover { background: #333; }
+.about { padding: 100px 60px; background: #eeebe4; display: flex; align-items: flex-start; gap: 60px; }
+.about-img { width: 340px; height: 460px; object-fit: cover; object-position: top; flex-shrink: 0; filter: grayscale(20%); }
+.about-text { flex: 1; }
+.about-text h2 { font-size: 36px; color: #111; margin-bottom: 20px; font-weight: 700; }
+.about-text p { font-size: 19px; color: #333; line-height: 2.1; margin-bottom: 22px; font-weight: 300; }
+.stats { display: flex; gap: 50px; margin-top: 40px; flex-wrap: wrap; }
+.stat .num { font-size: 44px; font-weight: 700; color: #111; font-family: 'Playfair Display', serif; }
+.stat .label { font-size: 13px; color: #999; letter-spacing: 2px; text-transform: uppercase; margin-top: 5px; }
+.divider { width: 50px; height: 2px; background: #111; margin-bottom: 25px; }
+.properties { padding: 100px 60px; background: #f5f3ef; }
+.properties h2 { text-align: center; font-size: 40px; color: #111; margin-bottom: 15px; font-weight: 700; }
+.properties .subtitle { text-align: center; color: #777; margin-bottom: 40px; letter-spacing: 1px; font-size: 18px; }
+.filters { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px; }
+.filter-select { padding: 10px 20px; border: 1px solid #ccc; background: #fff; font-size: 14px; font-family: 'Heebo', sans-serif; cursor: pointer; color: #111; min-width: 150px; }
+.filter-select:focus { outline: none; border-color: #111; }
+.filter-reset { padding: 10px 20px; background: transparent; color: #111; border: 1px solid #111; font-size: 14px; font-family: 'Heebo', sans-serif; cursor: pointer; transition: all 0.3s; }
+.filter-reset:hover { background: #111; color: #fff; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+.card { background: #faf8f5; overflow: hidden; border: 1px solid #eee; transition: all 0.3s; cursor: pointer; }
+.card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); border-color: #111; }
+.card-img { width: 100%; height: 220px; object-fit: cover; background: #ddd; }
+.card-body { padding: 22px; }
+.card-badges { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+.badge { font-size: 11px; padding: 4px 10px; letter-spacing: 1px; text-transform: uppercase; }
+.badge-sale { background: #111; color: #fff; }
+.badge-rent { background: #555; color: #fff; }
+.card-title { font-size: 17px; color: #111; margin-bottom: 12px; font-family: 'Playfair Display', serif; }
+.card-details { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; }
+.card-detail { font-size: 13px; color: #666; }
+.card-price { font-size: 20px; font-weight: 700; color: #111; font-family: 'Playfair Display', serif; margin-bottom: 15px; }
+.card-btn { background: none; border: 1px solid #111; color: #111; padding: 10px 20px; cursor: pointer; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s; font-family: 'Heebo', sans-serif; width: 100%; text-align: center; }
+.card-btn:hover { background: #111; color: #fff; }
+.props-counter { text-align: center; color: #999; font-size: 13px; margin-bottom: 20px; letter-spacing: 1px; }
+.no-results { text-align: center; padding: 60px; color: #999; font-size: 18px; grid-column: 1/-1; }
+.property-page { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f5f3ef; z-index: 9999; overflow-y: auto; }
+.property-page.active { display: block; }
+.property-nav { background: #111; padding: 20px 60px; display: flex; align-items: center; gap: 20px; position: sticky; top: 0; z-index: 10; }
+.property-back { background: none; border: 1px solid #555; color: #fff; padding: 8px 20px; cursor: pointer; font-size: 13px; font-family: 'Heebo', sans-serif; letter-spacing: 1px; transition: all 0.3s; }
+.property-back:hover { background: #fff; color: #111; }
+.property-nav-title { color: #fff; font-size: 16px; font-family: 'Playfair Display', serif; }
+.property-content { max-width: 1100px; margin: 0 auto; padding: 60px 40px; }
+.property-header { margin-bottom: 40px; }
+.property-header h1 { font-size: 36px; color: #111; margin-bottom: 10px; }
+.property-city { color: #999; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
+.property-price { font-size: 32px; font-weight: 700; color: #111; font-family: 'Playfair Display', serif; }
+.property-status { display: inline-block; padding: 6px 15px; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+.property-status.sale { background: #111; color: #fff; }
+.property-status.rent { background: #555; color: #fff; }
+.gallery { margin-bottom: 40px; }
+.gallery-main { width: 100%; height: 480px; object-fit: cover; margin-bottom: 10px; cursor: pointer; }
+.gallery-thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
+.gallery-thumb { width: 100%; height: 80px; object-fit: cover; cursor: pointer; opacity: 0.7; transition: opacity 0.3s; }
+.gallery-thumb:hover, .gallery-thumb.active { opacity: 1; }
+.gallery-loading { text-align: center; padding: 40px; color: #999; font-size: 16px; }
+.property-specs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; background: #fff; padding: 30px; margin-bottom: 40px; border: 1px solid #eee; }
+.spec { text-align: center; }
+.spec-icon { font-size: 28px; margin-bottom: 8px; }
+.spec-label { font-size: 12px; color: #999; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px; }
+.spec-value { font-size: 20px; font-weight: 700; color: #111; font-family: 'Playfair Display', serif; }
+.property-description { background: #fff; padding: 30px; margin-bottom: 40px; border: 1px solid #eee; }
+.property-description h3 { font-size: 20px; margin-bottom: 15px; }
+.property-description p { font-size: 16px; color: #333; line-height: 1.9; white-space: pre-line; }
+.property-map { margin-bottom: 40px; }
+.property-map h3 { font-size: 20px; margin-bottom: 15px; }
+.map-frame { width: 100%; height: 350px; border: 1px solid #eee; }
+.property-contact { background: #111; padding: 40px; color: #fff; margin-bottom: 40px; }
+.property-contact h3 { font-size: 24px; margin-bottom: 8px; }
+.property-contact p { color: #999; margin-bottom: 25px; font-size: 14px; }
+.property-contact input, .property-contact textarea { width: 100%; padding: 12px 15px; background: #1a1a1a; border: 1px solid #333; color: #fff; font-size: 14px; font-family: 'Heebo', sans-serif; margin-bottom: 12px; }
+.property-contact input::placeholder, .property-contact textarea::placeholder { color: #666; }
+.property-contact textarea { height: 100px; resize: vertical; }
+.lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 99999; justify-content: center; align-items: center; }
+.lightbox.active { display: flex; }
+.lightbox img { max-width: 90%; max-height: 90vh; object-fit: contain; }
+.lightbox-close { position: absolute; top: 20px; left: 20px; background: none; border: 1px solid #555; color: #fff; width: 40px; height: 40px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.lightbox-prev, .lightbox-next { position: absolute; top: 50%; transform: translateY(-50%); background: none; border: 1px solid #555; color: #fff; width: 50px; height: 50px; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.lightbox-prev { right: 20px; }
+.lightbox-next { left: 20px; }
+.contact { padding: 100px 60px; background: #111; text-align: center; }
+.contact h2 { font-size: 40px; color: #fff; margin-bottom: 15px; font-weight: 700; }
+.contact .subtitle { color: #999; margin-bottom: 50px; font-size: 14px; letter-spacing: 1px; }
+.contact-options { display: flex; gap: 120px; justify-content: center; flex-wrap: wrap; margin-bottom: 60px; align-items: center; }
+.contact-option a { color: #fff; font-size: 16px; font-weight: 300; text-decoration: none; display: block; margin-top: 12px; letter-spacing: 3px; text-transform: uppercase; transition: color 0.4s; }
+.contact-option .icon { font-size: 28px; opacity: 0.7; }
+.contact-ariel-img { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; object-position: top; opacity: 0.6; display: block; margin: 0 auto; }
+.contact form { max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
+.contact input, .contact textarea { padding: 15px 20px; background: #1a1a1a; border: 1px solid #333; color: #fff; font-size: 15px; font-family: 'Heebo', sans-serif; }
+.contact input::placeholder, .contact textarea::placeholder { color: #666; }
+.contact textarea { height: 130px; resize: vertical; }
+footer { text-align: center; padding: 30px; background: #000; color: #555; border-top: 1px solid #222; font-size: 13px; letter-spacing: 1px; }
+footer a { color: #999; text-decoration: none; }
+.chat-bubble { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #111; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 8888; box-shadow: 0 4px 20px rgba(0,0,0,0.3); transition: transform 0.3s; }
+.chat-bubble:hover { transform: scale(1.1); }
+.chat-bubble svg { width: 28px; height: 28px; fill: #fff; }
+.chat-notification { position: absolute; top: -3px; right: -3px; width: 16px; height: 16px; background: #25D366; border-radius: 50%; border: 2px solid #fff; }
+.chat-window { position: fixed; bottom: 105px; right: 30px; width: 370px; height: 520px; background: #fff; border: 1px solid #eee; box-shadow: 0 10px 40px rgba(0,0,0,0.15); display: none; flex-direction: column; z-index: 8888; border-radius: 12px; overflow: hidden; }
+.chat-window.open { display: flex; }
+.chat-header { background: #111; padding: 18px 20px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.chat-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: top; border: 2px solid #fff; }
+.chat-header-info { flex: 1; }
+.chat-header-info h4 { color: #fff; font-size: 15px; font-family: 'Playfair Display', serif; }
+.chat-header-info span { color: #aaa; font-size: 12px; }
+.chat-close { background: none; border: none; color: #aaa; font-size: 20px; cursor: pointer; }
+.chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; background: #f9f9f9; }
+.msg { max-width: 80%; padding: 12px 15px; font-size: 14px; line-height: 1.6; border-radius: 12px; }
+.msg.bot { background: #fff; color: #111; align-self: flex-start; border: 1px solid #eee; border-radius: 0 12px 12px 12px; }
+.msg.user { background: #111; color: #fff; align-self: flex-end; border-radius: 12px 0 12px 12px; }
+.msg.typing { background: #fff; border: 1px solid #eee; border-radius: 0 12px 12px 12px; align-self: flex-start; color: #999; font-style: italic; }
+.chat-input-area { padding: 15px; border-top: 1px solid #eee; display: flex; gap: 10px; background: #fff; flex-shrink: 0; }
+.chat-input { flex: 1; border: 1px solid #ddd; padding: 10px 15px; font-size: 14px; font-family: 'Heebo', sans-serif; outline: none; border-radius: 25px; }
+.chat-send { background: #111; color: #fff; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.3s; }
+.loading { text-align: center; padding: 80px; grid-column: 1/-1; }
+.loading-spinner { width: 40px; height: 40px; border: 3px solid #eee; border-top-color: #111; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 20px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } .property-specs { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 768px) { nav { padding: 15px 20px; } nav ul { display: none; } .hero h1 { font-size: 36px; } .about { flex-direction: column; padding: 60px 20px; gap: 30px; } .about-img { width: 100%; height: 300px; } .properties { padding: 60px 20px; } .grid { grid-template-columns: 1fr; } .contact { padding: 60px 20px; } .contact-options { gap: 40px; } .chat-window { width: calc(100vw - 20px); right: 10px; bottom: 100px; } .property-nav { padding: 15px 20px; } .property-content { padding: 30px 20px; } .gallery-main { height: 280px; } }
+</style>
 </head>
 <body lang="he">
-
 <nav>
-    <div class="logo">אריאל סיבוני<span>Real Estate · Remax</span></div>
-    <ul>
-        <li><a href="#about">אודות</a></li>
-        <li><a href="#properties">נכסים</a></li>
-        <li><a href="#contact">צור קשר</a></li>
-        <li><a href="https://wa.me/972535359767" class="nav-whatsapp" target="_blank">לשיחה עם אריאל</a></li>
-    </ul>
+  <div class="logo">אריאל סיבוני<span>Real Estate · Remax</span></div>
+  <ul>
+    <li><a href="#about">אודות</a></li>
+    <li><a href="#properties">נכסים</a></li>
+    <li><a href="#contact">צור קשר</a></li>
+    <li><a href="https://wa.me/972535359767" class="nav-whatsapp" target="_blank">לשיחה עם אריאל</a></li>
+  </ul>
 </nav>
-
 <section class="hero">
-    <div>
-        <h1>מקום לקרוא לו בית</h1>
-        <p>נכסים בלעדיים באזור חולון, בת ים, ראשון לציון ותל אביב</p>
-        <p class="sub">אריאל סיבוני · מתווך מוסמך · ריימקס</p>
-        <div class="hero-buttons">
-            <a href="#properties" class="btn">לצפייה בנכסים</a>
-        </div>
-    </div>
+  <div>
+    <h1>מקום לקרוא לו בית</h1>
+    <p>נכסים בלעדיים באזור חולון, בת ים, ראשון לציון ותל אביב</p>
+    <p class="sub">אריאל סיבוני · מתווך מוסמך · ריימקס</p>
+    <a href="#properties" class="btn">לצפייה בנכסים</a>
+  </div>
 </section>
-
 <section class="about" id="about">
-    <img src="ariel.png" alt="אריאל סיבוני" class="about-img">
-    <div class="about-text">
-        <div class="divider"></div>
-        <h2>אריאל סיבוני – נדל"ן ברמה אחרת</h2>
-        <p>מתווך נדל"ן מוסמך ברשת רימקס עם ניסיון מוכח בליווי עסקאות מורכבות והובלת לקוחות לתוצאות מקסימליות.</p>
-        <p>בעולם שבו כל עסקת נדל"ן יכולה להיות ההחלטה הכלכלית המשמעותית ביותר בחיים — בחירת האדם שמלווה אותך בתהליך היא קריטית.</p>
-        <p>אני מתמחה בליווי אישי ומדויק של מוכרים וקונים באזורי חולון, בת ים, ראשון לציון, תל אביב ובית דגן — תוך הבנה עמוקה של הדינמיקה המקומית, מגמות המחירים והזדמנויות אמיתיות בשטח.</p>
-        <p>אני לא עובד בשיטה של "לפרסם ולחכות". אני פועל בגישה אסטרטגית, ממוקדת תוצאה — שמטרתה אחת: להשיג עבורך את העסקה הטובה ביותר, בזמן הנכון ובתנאים האופטימליים.</p>
-        <p>רוב הלקוחות שלי מגיעים דרך המלצות — וזה לא במקרה.</p>
-        <div class="stats">
-            <div class="stat"><div class="num">5+</div><div class="label">שנות ניסיון</div></div>
-            <div class="stat"><div class="num">150+</div><div class="label">נכסים</div></div>
-            <div class="stat"><div class="num">5</div><div class="label">אזורי פעילות</div></div>
-        </div>
+  <img src="ariel.png" alt="אריאל סיבוני" class="about-img">
+  <div class="about-text">
+    <div class="divider"></div>
+    <h2>אריאל סיבוני - נדל"ן ברמה אחרת</h2>
+    <p>מתווך נדל"ן מוסמך ברשת רימקס עם ניסיון מוכח בליווי עסקאות מורכבות והובלת לקוחות לתוצאות מקסימליות.</p>
+    <p>בעולם שבו כל עסקת נדל"ן יכולה להיות ההחלטה הכלכלית המשמעותית ביותר בחיים — בחירת האדם שמלווה אותך בתהליך היא קריטית.</p>
+    <p>אני מתמחה בליווי אישי ומדויק של מוכרים וקונים באזורי חולון, בת ים, ראשון לציון, תל אביב ובית דגן.</p>
+    <p>אני לא עובד בשיטה של לפרסם ולחכות. אני פועל בגישה אסטרטגית, ממוקדת תוצאה.</p>
+    <p>רוב הלקוחות שלי מגיעים דרך המלצות — וזה לא במקרה.</p>
+    <div class="stats">
+      <div class="stat"><div class="num">5+</div><div class="label">שנות ניסיון</div></div>
+      <div class="stat"><div class="num">150+</div><div class="label">נכסים</div></div>
+      <div class="stat"><div class="num">5</div><div class="label">אזורי פעילות</div></div>
     </div>
+  </div>
 </section>
-
 <section class="properties" id="properties">
-    <h2>נכסים מובילים למכירה באזור המרכז</h2>
-    <p class="subtitle">מבחר נכסים איכותיים בליווי אישי ומקצועי — עד לסגירת העסקה</p>
-    <p class="props-counter" id="propsCounter"></p>
-    <div class="grid" id="grid"></div>
-    <div class="load-more-wrap">
-        <button class="load-more-btn" id="loadMoreBtn" onclick="loadMore()">טען עוד נכסים</button>
-    </div>
+  <h2>נכסים מובילים למכירה</h2>
+  <p class="subtitle">כל הנכסים בליווי אישי ומקצועי — עד לסגירת העסקה</p>
+  <div class="filters">
+    <select class="filter-select" id="filterCity"><option value="">כל הערים</option></select>
+    <select class="filter-select" id="filterRooms">
+      <option value="">כל החדרים</option>
+      <option value="1">1 חדר</option>
+      <option value="2">2 חדרים</option>
+      <option value="3">3 חדרים</option>
+      <option value="4">4 חדרים</option>
+      <option value="5">5+ חדרים</option>
+    </select>
+    <select class="filter-select" id="filterPrice">
+      <option value="">כל המחירים</option>
+      <option value="0-1500000">עד 1.5M</option>
+      <option value="1500000-2500000">1.5M - 2.5M</option>
+      <option value="2500000-4000000">2.5M - 4M</option>
+      <option value="4000000-999999999">מעל 4M</option>
+    </select>
+    <select class="filter-select" id="filterStatus">
+      <option value="">הכל</option>
+      <option value="למכירה">למכירה</option>
+      <option value="להשכרה">להשכרה</option>
+    </select>
+    <button class="filter-reset" onclick="resetFilters()">נקה</button>
+  </div>
+  <p class="props-counter" id="propsCounter"></p>
+  <div class="grid" id="grid">
+    <div class="loading"><div class="loading-spinner"></div><p>טוען נכסים...</p></div>
+  </div>
 </section>
-
 <section class="contact" id="contact">
-    <h2>צור קשר</h2>
-    <p class="subtitle">השאר פרטים ואריאל יחזור אליך בהקדם</p>
-    <div class="contact-options">
-        <div class="contact-option">
-            <div class="icon">📞</div>
-            <a href="tel:0535359767">053-535-9767</a>
-        </div>
-        <div class="contact-option">
-            <img src="arielsign.png" alt="אריאל" class="contact-ariel-img">
-            <a href="https://wa.me/972535359767" target="_blank">לשיחה עם אריאל בוואטסאפ</a>
-        </div>
-    </div>
-    <form>
-        <input type="text" placeholder="שם מלא" required>
-        <input type="tel" placeholder="טלפון" required>
-        <input type="email" placeholder="אימייל">
-        <textarea placeholder="במה אוכל לעזור? (סוג נכס, אזור, תקציב...)"></textarea>
-        <button class="btn-dark" type="submit">שלח פנייה</button>
-    </form>
+  <h2>צור קשר</h2>
+  <p class="subtitle">השאר פרטים ואריאל יחזור אליך בהקדם</p>
+  <div class="contact-options">
+    <div class="contact-option"><div class="icon">📞</div><a href="tel:0535359767">053-535-9767</a></div>
+    <div class="contact-option"><img src="arielsign.png" alt="אריאל" class="contact-ariel-img"><a href="https://wa.me/972535359767" target="_blank">לשיחה עם אריאל בוואטסאפ</a></div>
+  </div>
+  <form>
+    <input type="text" placeholder="שם מלא" required>
+    <input type="tel" placeholder="טלפון" required>
+    <input type="email" placeholder="אימייל">
+    <textarea placeholder="במה אוכל לעזור?"></textarea>
+    <button class="btn-dark" type="submit">שלח פנייה</button>
+  </form>
 </section>
-
-<footer>
-    <p>© 2026 אריאל סיבוני | מתווך נדל"ן | ריימקס | <a href="tel:0535359767">053-535-9767</a></p>
-</footer>
-
-<div class="popup-overlay" id="popupOverlay">
-    <div class="popup-box">
-        <div class="popup-header">
-            <span id="popupTitle">טוען...</span>
-            <button class="popup-close-btn" id="closeBtn">✕</button>
-        </div>
-        <iframe class="popup-frame" id="popupFrame" src="about:blank"></iframe>
+<footer><p>© 2026 אריאל סיבוני | מתווך נדל"ן | ריימקס | <a href="tel:0535359767">053-535-9767</a></p></footer>
+<div class="property-page" id="propertyPage">
+  <div class="property-nav">
+    <button class="property-back" onclick="closePropPage()">← חזרה לנכסים</button>
+    <span class="property-nav-title" id="propNavTitle"></span>
+  </div>
+  <div class="property-content">
+    <div class="property-header">
+      <span class="property-status" id="propStatus"></span>
+      <h1 id="propTitle"></h1>
+      <p class="property-city" id="propCity"></p>
+      <div class="property-price" id="propPrice"></div>
     </div>
+    <div class="gallery" id="propGallery"><div class="gallery-loading">טוען תמונות...</div></div>
+    <div class="property-specs" id="propSpecs"></div>
+    <div class="property-description" id="propDesc"></div>
+    <div class="property-map"><h3>מיקום הנכס על המפה</h3><iframe class="map-frame" id="propMap" src="" allowfullscreen="" loading="lazy"></iframe></div>
+    <div class="property-contact">
+      <h3>מעוניינים בנכס זה?</h3>
+      <p>השאירו פרטים ואריאל יחזור אליכם בהקדם</p>
+      <input type="text" placeholder="שם מלא" id="contactName">
+      <input type="tel" placeholder="טלפון" id="contactPhone">
+      <textarea placeholder="הודעה..." id="contactMsg"></textarea>
+      <button class="btn-dark" onclick="sendWhatsApp()">שלח בוואטסאפ ←</button>
+    </div>
+  </div>
 </div>
-
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <button class="lightbox-prev" onclick="lightboxPrev()">›</button>
+  <img id="lightboxImg" src="" alt="">
+  <button class="lightbox-next" onclick="lightboxNext()">‹</button>
+</div>
 <div class="chat-bubble" id="chatBubble">
-    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
-    <div class="chat-notification"></div>
+  <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+  <div class="chat-notification"></div>
 </div>
-
 <div class="chat-window" id="chatWindow">
-    <div class="chat-header">
-        <img src="ariel.png" alt="אריאל" class="chat-avatar">
-        <div class="chat-header-info">
-            <h4>הבוט של אריאל 🏠</h4>
-            <span>מחובר · עונה מיד</span>
-        </div>
-        <button class="chat-close" id="chatClose">✕</button>
-    </div>
-    <div class="chat-messages" id="chatMessages"></div>
-    <div class="chat-input-area">
-        <input type="text" class="chat-input" id="chatInput" placeholder="כתוב הודעה..."/>
-        <button class="chat-send" id="chatSend">➤</button>
-    </div>
+  <div class="chat-header">
+    <img src="ariel.png" alt="אריאל" class="chat-avatar">
+    <div class="chat-header-info"><h4>הבוט של אריאל 🏠</h4><span>מחובר · עונה מיד</span></div>
+    <button class="chat-close" id="chatClose">✕</button>
+  </div>
+  <div class="chat-messages" id="chatMessages"></div>
+  <div class="chat-input-area">
+    <input type="text" class="chat-input" id="chatInput" placeholder="כתוב הודעה..."/>
+    <button class="chat-send" id="chatSend">➤</button>
+  </div>
 </div>
-
 <script>
-// פונקציה להמרת slug לשם עברי קריא
-function slugToHebrew(slug) {
-    const map = {
-        'tzvihermanshapira2': 'צבי הרמן שפירא 2', 'guy5': 'גיא 5', 'yehudahalevi45': 'יהודה הלוי 45',
-        'eliezerhufyen7holon': 'אליעזר חופיין 7 — חולון', 'emek5-4': 'העמק 5/4', 'haronovitz51': 'הרונוביץ 51',
-        'borochov26': 'ברוכוב 26', 'hashikma6': 'השיקמה 6', 'tzyonatedomer3talaviv': 'ציונה תדמור 3 — תל אביב',
-        'emek2rent': 'העמק 2 — להשכרה', 'tzalim10holon': 'צלים 10 — חולון', 'jerusalem53': 'ירושלים 53',
-        'nisimbachar7rent': 'נסים בכר 7 — להשכרה', 'eilat64': 'אילת 64', 'sokolov130holon': 'סוקולוב 130 — חולון',
-        'yoseftal3': 'יוסף טל 3', 'dror50': 'דרור 50', 'maymon21': 'מיימון 21', 'rambam3': 'רמב"ם 3',
-        'emek5-9haskara': 'העמק 5/9 — הסכרה', 'davidzon4': 'דוידזון 4', 'hagfan9roshonletzyon': 'הגפן 9 — ראשון לציון',
-        'peretzgoldshtain9': 'פרץ גולדשטיין 9', 'hanasanesh13rishonletzion': 'הנסנס 13 — ראשון לציון',
-        'boaz32': 'בועז 32', 'igalyadin11': 'יגאל ידין 11', '3630-91-2': 'נכס מיוחד',
-        'yodalefbeadar40': 'יו"ד אלף באדר 40', 'yehudahalevi7': 'יהודה הלוי 7', 'hayakinton5': 'היקינטון 5',
-        'itzhaksade22': 'יצחק שדה 22', 'haistadrut21': 'ההסתדרות 21', 'elicohen28': 'אלי כהן 28',
-        'jabutinski24': 'ז\'בוטינסקי 24', 'katzanelson17': 'קצנלסון 17', 'mivtzasinai31': 'מבצע סיני 31',
-        'ramathagolan33': 'רמת הגולן 33', 'davidzon6': 'דוידזון 6', 'anilevitz7': 'אנילביץ 7',
-        'arlozorov43': 'ארלוזורוב 43', 'mapo2': 'מאפו 2', 'hatizmoret6': 'התזמורת 6', 'hagat8': 'הגת 8',
-        'hertzel91': 'הרצל 91', 'amirdrori2': 'אמיר דרורי 2', 'elicohen10': 'אלי כהן 10',
-        'hachermon7': 'החרמון 7', 'hatayasim20': 'הטייסים 20', 'shlomoeliraz1': 'שלמה אלירז 1',
-        'asakadmoni2': 'אסא קדמוני 2', 'harava11': 'הרבה 11', 'mg10': 'מ.ג 10', 'hatizmoret50': 'התזמורת 50',
-        'hacharoshet10': 'החרושת 10', 'volkani6': 'וולקני 6', 'einhakore10': 'עין הקורא 10',
-        'haemek2-15rent': 'העמק 2/15 — להשכרה', 'haemek2-15': 'העמק 2/15', 'achidakar8': 'אחי דקר 8',
-        'hashikma2': 'השיקמה 2', 'barnitzki18': 'ברניצקי 18', 'shpinoza1': 'שפינוזה 1',
-        'davidtzadok26': 'דוד צדוק 26', 'vaizman76': 'ויצמן 76', 'uzihitman3': 'עוזי חיטמן 3',
-        'hadas22': 'הדס 22', 'yaldeitaharan8-6': 'ילדי טהרן 8/6', 'yaldeitaharan8': 'ילדי טהרן 8',
-        'kerenhayesod17': 'קרן היסוד 17', 'moshesharet65': 'משה שרת 65', 'emek5-9': 'העמק 5/9',
-        'haimbarlev131': 'חיים בר לב 131', 'hareshet14': 'הרשת 14', 'trumpeldor2': 'טרומפלדור 2',
-        'benovember22hascara': 'בן נובמבר 22 — הסכרה', 'benovember22': 'בן נובמבר 22',
-        'davidraziel27': 'דוד רזיאל 27', 'hashvatim10-3': 'השבטים 10/3', 'misholhanofach6': 'מישול הנופח 6',
-        'wolfson42-22': 'וולפסון 42/22', 'wolfson42-21': 'וולפסון 42/21', 'wolfson42-19': 'וולפסון 42/19',
-        'wolfson42-15': 'וולפסון 42/15', 'hakishor47hascara': 'הכישור 47 — הסכרה',
-        'anafrank16': 'אנה פרנק 16', 'abarbanel3': 'אברבנאל 3', 'balfur165': 'בלפור 165',
-        'maalot1holon': 'מעלות 1 — חולון', 'pinkas7': 'פינקס 7', 'hashvatim2-3': 'השבטים 2/3',
-        'haneviym29': 'הנביאים 29', 'roshpina22': 'ראשפינה 22', 'hachashmonaim15': 'החשמונאים 15',
-        'alyiathanoar21': 'עלית הנוער 21', 'zalmanshazar49': 'זלמן שזר 49', 'anafrank14': 'אנה פרנק 14',
-        'hashomron10': 'השומרון 10', 'hashikma8': 'השיקמה 8', 'nisimbachar7': 'נסים בכר 7',
-        'nisanbaum37-2': 'ניסנבאום 37/2', 'hatapuz7': 'התפוז 7', 'hashvatim2': 'השבטים 2',
-        'alterman21': 'אלתרמן 21', 'itzhakrabin24': 'יצחק רבין 24', 'haorgim16': 'האורגים 16',
-        'givaty9': 'גבעתי 9', 'hashvatim10-2': 'השבטים 10/2', 'shimonavidan18': 'שמעון אבידן 18',
-        'hakeshet4': 'הקשת 4', 'hashvatim10': 'השבטים 10', 'kibutzgaluiot19': 'קיבוץ גלויות 19',
-        'havivarayk17has': 'חביבה רייך 17 — הסכרה', 'mordechaypopel10': 'מרדכי פופל 10',
-        'ryval12': 'ריבל 12', 'hatotchanim23': 'התותחנים 23', 'halochmim1': 'הלוחמים 1',
-        'hatzionot12': 'הציונות 12', 'shacharov19has': 'שחרוב 19 — הסכרה', 'harokmim27-2': 'הרוקמים 27/2',
-        'haemek6-2': 'העמק 6/2', 'havivarayk17': 'חביבה רייך 17', 'balfur123': 'בלפור 123',
-        'balfur155': 'בלפור 155', 'menachembegin15': 'מנחם בגין 15', 'hachalutzim48': 'החלוצים 48',
-        'ornaporat4': 'אורנה פורת 4', 'hoaleiyaakov2': 'הועלי יעקב 2', 'ehudmanor13': 'אהוד מנור 13',
-        'harhatzofim38': 'הר הצופים 38', 'haasif18': 'האסיף 18', 'bengurion138': 'בן גוריון 138',
-        'catzanelson41': 'קצנלסון 41', 'hakeshet2telaviv': 'הקשת 2 — תל אביב', 'sacharov19-2': 'סחרוב 19/2',
-        'tzvishatz35': 'צבי שץ 35', 'harokmim21has': 'הרוקמים 21 — הסכרה', 'harokmim21': 'הרוקמים 21',
-        'baalshemtov15': 'בעל שם טוב 15', 'mifratzshlomo90': 'מפרץ שלמה 90', 'misholinbar10': 'מישולין בר 10',
-        'bengurion18': 'בן גוריון 18', 'pinchaslavon12holon': 'פנחס לבון 12 — חולון',
-        'misholhayasmin4': 'מישול היסמין 4', 'telchai28': 'תל חי 28', 'haemek5-a6': 'העמק 5א/6',
-        'sokolov15holon': 'סוקולוב 15 — חולון', 'hakishor49': 'הכישור 49', 'metzada7': 'מצדה 7',
-        'hatzmaoot67': 'העצמאות 67', 'hanevym12': 'הנביים 12', 'beretz19': 'ברץ 19', 'haneveim47': 'הנביאים 47'
-    };
-    return map[slug] || slug.replace(/([a-z])(\d)/g, '$1 $2').replace(/-/g, '/');
+const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vStpBrNoGifPS8MAtXFziZD_xj_vAepH-3zmhj9CUB_P3k-mt4JUce94DqdASpt-c4be8JnYzXY4N2J/pub?gid=0&single=true&output=csv';
+let allProperties = [], filteredProperties = [], currentImages = [], lightboxIndex = 0;
+
+async function loadProperties() {
+  try {
+    const res = await fetch(SHEET_CSV);
+    const csv = await res.text();
+    const rows = csv.trim().split('\n');
+    const headers = rows[0].split(',').map(h => h.trim().replace(/"/g, ''));
+    allProperties = rows.slice(1).map(row => {
+      const vals = parseCSVRow(row);
+      const obj = {};
+      headers.forEach((h, i) => obj[h] = (vals[i] || '').trim().replace(/"/g, ''));
+      return obj;
+    }).filter(p => p['פעיל'] === 'כן' && p['כתובת']);
+    populateCityFilter();
+    filteredProperties = [...allProperties];
+    renderGrid();
+  } catch(e) {
+    document.getElementById('grid').innerHTML = '<div class="no-results">שגיאה בטעינת הנכסים.</div>';
+  }
 }
 
-const BASE_URL = 'https://www.rosenberger.co.il/properties/';
-const slugs = [
-    'tzvihermanshapira2','guy5','yehudahalevi45','eliezerhufyen7holon','emek5-4','haronovitz51',
-    'borochov26','hashikma6','tzyonatedomer3talaviv','emek2rent','tzalim10holon','jerusalem53',
-    'nisimbachar7rent','eilat64','sokolov130holon','yoseftal3','dror50','maymon21','rambam3',
-    'emek5-9haskara','davidzon4','hagfan9roshonletzyon','peretzgoldshtain9','hanasanesh13rishonletzion',
-    'boaz32','igalyadin11','3630-91-2','yodalefbeadar40','yehudahalevi7','hayakinton5',
-    'itzhaksade22','haistadrut21','elicohen28','jabutinski24','katzanelson17','mivtzasinai31',
-    'ramathagolan33','davidzon6','anilevitz7','arlozorov43','mapo2','hatizmoret6','hagat8',
-    'hertzel91','amirdrori2','elicohen10','hachermon7','hatayasim20','shlomoeliraz1','asakadmoni2',
-    'harava11','mg10','hatizmoret50','hacharoshet10','volkani6','einhakore10','haemek2-15rent',
-    'haemek2-15','achidakar8','hashikma2','barnitzki18','shpinoza1','davidtzadok26','vaizman76',
-    'uzihitman3','hadas22','yaldeitaharan8-6','yaldeitaharan8','kerenhayesod17','moshesharet65',
-    'emek5-9','haimbarlev131','hareshet14','trumpeldor2','benovember22hascara','benovember22',
-    'davidraziel27','hashvatim10-3','misholhanofach6','wolfson42-22','wolfson42-21','wolfson42-19',
-    'wolfson42-15','hakishor47hascara','anafrank16','abarbanel3','balfur165','maalot1holon',
-    'pinkas7','hashvatim2-3','haneviym29','roshpina22','hachashmonaim15','alyiathanoar21',
-    'zalmanshazar49','anafrank14','hashomron10','hashikma8','nisimbachar7','nisanbaum37-2',
-    'hatapuz7','hashvatim2','alterman21','itzhakrabin24','haorgim16','givaty9','hashvatim10-2',
-    'shimonavidan18','hakeshet4','hashvatim10','kibutzgaluiot19','havivarayk17has','mordechaypopel10',
-    'ryval12','hatotchanim23','halochmim1','hatzionot12','shacharov19has','harokmim27-2',
-    'haemek6-2','havivarayk17','balfur123','balfur155','menachembegin15','hachalutzim48',
-    'ornaporat4','hoaleiyaakov2','ehudmanor13','harhatzofim38','haasif18','bengurion138',
-    'catzanelson41','hakeshet2telaviv','sacharov19-2','tzvishatz35','harokmim21has','harokmim21',
-    'baalshemtov15','mifratzshlomo90','misholinbar10','bengurion18','pinchaslavon12holon',
-    'misholhayasmin4','telchai28','haemek5-a6','sokolov15holon','hakishor49','metzada7',
-    'hatzmaoot67','hanevym12','beretz19','haneveim47',
-    // Original properties
-    'bengurion85','hadror40','hertzel75','davidsenior3rent','menachemarber13','mivtzasinai15',
-    'machrozet35','serlin36','volkany7','oleyhagardom68','medorageyhametzoda12','levinsky138'
-];
-
-const BATCH = 12;
-let shown = 0;
-
-const icons = ['🏠','🏢','🏡','🏘️','🏗️','🌆','🏙️','🏛️'];
-
-// תמונות אמיתיות לנכסים שיש לנו
-const knownImgs = {
-    'bengurion85': 'https://www.rosenberger.co.il/wp-content/uploads/2026/03/ערן-תמונה-ראשית-לאתר-22.jpg',
-    'hadror40': 'https://www.rosenberger.co.il/wp-content/uploads/2026/03/ערן-תמונה-ראשית-לאתר-1-8.jpg',
-    'hertzel75': 'https://www.rosenberger.co.il/wp-content/uploads/elementor/thumbs/ערן-תמונה-ראשית-לאתר-18-rkz25lw1zhce67xz3v4w4u6dgwk8ds0a3va81729zc.jpg',
-    'davidsenior3rent': 'https://www.rosenberger.co.il/wp-content/uploads/elementor/thumbs/ערן-תמונה-ראשית-לאתר-16-rkyvckcqbbwdhtvqzfz7m69efqcgqe7e30qb3ce22w.jpg',
-    'menachemarber13': 'https://www.rosenberger.co.il/wp-content/uploads/elementor/thumbs/ערן-תמונה-ראשית-לאתר-15-rkvqjzgael9qow3nx8h97ui32gfipzzch0g2p51xqg.jpg',
-    'mivtzasinai15': 'https://www.rosenberger.co.il/wp-content/uploads/elementor/thumbs/ערן-תמונה-ראשית-לאתר-1-7-rkvnn3mlt3ox7ag9decwhtbgtne2tull1vulwmke14.jpg',
-    'machrozet35': 'https://www.rosenberger.co.il/wp-content/uploads/elementor/thumbs/ערן-תמונה-ראשית-לאתר-14-rkvho23u9lbd2ut92g1k22v4c7b1uowa5ivldpetjc.jpg',
-    'serlin36': 'https://www.rosenberger.co.il/wp-content/uploads/elementor/thumbs/ערן-תמונה-ראשית-לאתר-13-rkqh3xsut953zelk78e7uv1acvkhi8vesx3opd7c3s.jpg',
-    'volkany7': 'https://www.rosenberger.co.il/wp-content/uploads/elementor/thumbs/ערן-תמונה-ראשית-לאתר-12-rkolad2wgkt4jb4gacjxnhgters8hszis8q4zncoi0.jpg',
-    'oleyhagardom68': 'https://www.rosenberger.co.il/wp-content/uploads/elementor/thumbs/ערן-תמונה-ראשית-לאתר-21-rl12q8apzttsbsyp86o5kjvhy7a13dxrb5dmmlavbc.jpg',
-    'medorageyhametzoda12': 'https://www.rosenberger.co.il/wp-content/uploads/elementor/thumbs/ערן-תמונה-ראשית-לאתר-20-rl0yl2arfbmnvjmx97gjdoz47wi2kkr8gucnwsh0qw.jpg',
-    'levinsky138': 'https://www.rosenberger.co.il/wp-content/uploads/elementor/thumbs/ערן-תמונה-ראשית-לאתר-19-rl0ud9d3ojtkuo51ol7lp016hoq1gc3tlhfnq1jxmw.jpg'
-};
-
-const fallbackImg = 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&h=250&fit=crop';
-
-async function fetchOgImage(slug) {
-    if (knownImgs[slug]) return knownImgs[slug];
-    try {
-        const url = `https://www.rosenberger.co.il/properties/${slug}/`;
-        const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-        const res = await fetch(proxy);
-        const data = await res.json();
-        const match = data.contents.match(/property="og:image"\s+content="([^"]+)"/);
-        if (match) return match[1];
-    } catch(e) {}
-    return fallbackImg;
+function parseCSVRow(row) {
+  const result = []; let current = ''; let inQuotes = false;
+  for (let i = 0; i < row.length; i++) {
+    if (row[i] === '"') { inQuotes = !inQuotes; }
+    else if (row[i] === ',' && !inQuotes) { result.push(current); current = ''; }
+    else { current += row[i]; }
+  }
+  result.push(current);
+  return result;
 }
 
-function renderCards(from, to) {
-    const grid = document.getElementById('grid');
-    for (let i = from; i < to && i < slugs.length; i++) {
-        const slug = slugs[i];
-        const name = slugToHebrew(slug);
-        const url = BASE_URL + slug + '/';
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-            <img src="${knownImgs[slug] || fallbackImg}" alt="${name}" data-slug="${slug}" style="background:#e8e4de;">
-            <div class="card-body">
-                <h3>${name}</h3>
-                <div class="card-footer">
-                    <button class="card-btn" onclick="openPopup('${name}','${url}')">לפרטים נוספים ←</button>
-                </div>
-            </div>`;
-        grid.appendChild(card);
-
-        // טוען תמונה אמיתית אם אין
-        if (!knownImgs[slug]) {
-            const imgEl = card.querySelector('img');
-            fetchOgImage(slug).then(src => { if(src) imgEl.src = src; });
-        }
-    }
-    shown = to;
-    updateCounter();
-    const btn = document.getElementById('loadMoreBtn');
-    if (shown >= slugs.length) {
-        btn.textContent = 'הצגת כל הנכסים ✓';
-        btn.disabled = true;
-    }
+function populateCityFilter() {
+  const cities = [...new Set(allProperties.map(p => p['עיר']).filter(Boolean))];
+  const sel = document.getElementById('filterCity');
+  cities.forEach(city => { const opt = document.createElement('option'); opt.value = city; opt.textContent = city; sel.appendChild(opt); });
 }
 
-function updateCounter() {
-    document.getElementById('propsCounter').textContent = `מציג ${Math.min(shown, slugs.length)} מתוך ${slugs.length} נכסים`;
+function applyFilters() {
+  const city = document.getElementById('filterCity').value;
+  const rooms = document.getElementById('filterRooms').value;
+  const price = document.getElementById('filterPrice').value;
+  const status = document.getElementById('filterStatus').value;
+  filteredProperties = allProperties.filter(p => {
+    if (city && p['עיר'] !== city) return false;
+    if (status && p['סטטוס'] !== status) return false;
+    if (rooms) { const r = parseFloat(p['חדרים']); if (rooms === '5') { if (r < 5) return false; } else { if (Math.floor(r) !== parseFloat(rooms)) return false; } }
+    if (price) { const [min, max] = price.split('-').map(Number); const pr = parseFloat(p['מחיר']); if (pr < min || pr > max) return false; }
+    return true;
+  });
+  renderGrid();
 }
 
-function loadMore() {
-    renderCards(shown, shown + BATCH);
+function resetFilters() {
+  ['filterCity','filterRooms','filterPrice','filterStatus'].forEach(id => document.getElementById(id).value = '');
+  filteredProperties = [...allProperties];
+  renderGrid();
 }
 
-function openPopup(name, url) {
-    document.getElementById('popupTitle').textContent = name;
-    document.getElementById('popupFrame').src = url;
-    document.getElementById('popupOverlay').classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-function closePopupFn() {
-    document.getElementById('popupOverlay').classList.remove('active');
-    document.getElementById('popupFrame').src = 'about:blank';
-    document.body.style.overflow = '';
-}
-document.getElementById('closeBtn').addEventListener('click', closePopupFn);
-document.getElementById('popupOverlay').addEventListener('click', function(e) { if (e.target === this) closePopupFn(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closePopupFn(); });
+['filterCity','filterRooms','filterPrice','filterStatus'].forEach(id => document.getElementById(id).addEventListener('change', applyFilters));
 
-// Chat
-const SYSTEM_PROMPT = `אתה הבוט של אריאל סיבוני, מתווך נדל"ן מוסמך ברשת ריימקס. תמיד תהיה ידידותי ומקצועי ובעברית. עזור ללקוחות למצוא נכס מתאים לפי תקציב ואזור. יש מעל 160 נכסים באתר. בסוף כל תשובה הצע ליצור קשר עם אריאל: 053-535-9767`;
-let chatHistory = [];
-let chatOpen = false;
+function formatPrice(price) { const num = parseFloat(price); if (!num) return ''; return '₪' + num.toLocaleString('he-IL'); }
 
-function addMsg(text, type) {
-    const msgs = document.getElementById('chatMessages');
-    const div = document.createElement('div');
-    div.className = `msg ${type}`;
-    div.textContent = text;
-    msgs.appendChild(div);
-    msgs.scrollTop = msgs.scrollHeight;
-    return div;
+function getFirstImage(driveUrl) {
+  if (!driveUrl) return 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&h=250&fit=crop';
+  const match = driveUrl.match(/folders\/([^/?]+)/);
+  if (!match) return 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&h=250&fit=crop';
+  return 'https://drive.google.com/thumbnail?id=' + match[1] + '&sz=w400';
 }
 
-async function sendMessage(userText) {
-    if (!userText.trim()) return;
-    addMsg(userText, 'user');
-    chatHistory.push({ role: 'user', content: userText });
-    document.getElementById('chatInput').value = '';
-    const typingDiv = addMsg('מקליד...', 'typing');
-    try {
-        const response = await fetch('https://api.anthropic.com/v1/messages', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1000, system: SYSTEM_PROMPT, messages: chatHistory })
-        });
-        const data = await response.json();
-        const botReply = data.content[0].text;
-        typingDiv.remove();
-        addMsg(botReply, 'bot');
-        chatHistory.push({ role: 'assistant', content: botReply });
-    } catch (e) {
-        typingDiv.remove();
-        addMsg('מצטער, אירעה שגיאה. נסה שוב או התקשר ל-053-535-9767', 'bot');
-    }
+function renderGrid() {
+  const grid = document.getElementById('grid');
+  document.getElementById('propsCounter').textContent = filteredProperties.length ? 'מציג ' + filteredProperties.length + ' נכסים' : '';
+  if (!filteredProperties.length) { grid.innerHTML = '<div class="no-results">לא נמצאו נכסים</div>'; return; }
+  grid.innerHTML = filteredProperties.map((p, i) => {
+    const sc = p['סטטוס'] === 'להשכרה' ? 'rent' : 'sale';
+    return '<div class="card" onclick="openProperty(' + i + ')"><img class="card-img" src="' + getFirstImage(p['תמונות']) + '" alt="' + p['כתובת'] + '" onerror="this.src='https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&h=250&fit=crop'"><div class="card-body"><div class="card-badges"><span class="badge badge-' + sc + '">' + (p['סטטוס'] || 'למכירה') + '</span>' + (p['עיר'] ? '<span class="badge" style="background:#f0ede6;color:#666">' + p['עיר'] + '</span>' : '') + '</div><div class="card-title">' + p['כתובת'] + '</div><div class="card-details">' + (p['חדרים'] ? '<span class="card-detail">🛏 ' + p['חדרים'] + ' חדרים</span>' : '') + (p['מטרים'] ? '<span class="card-detail">📐 ' + p['מטרים'] + ' מ"ר</span>' : '') + (p['קומה'] ? '<span class="card-detail">🏢 קומה ' + p['קומה'] + '</span>' : '') + '</div>' + (p['מחיר'] ? '<div class="card-price">' + formatPrice(p['מחיר']) + '</div>' : '') + '<button class="card-btn">לפרטים נוספים ←</button></div></div>';
+  }).join('');
 }
 
-document.getElementById('chatBubble').addEventListener('click', () => {
-    chatOpen = !chatOpen;
-    document.getElementById('chatWindow').classList.toggle('open', chatOpen);
-    if (chatOpen && chatHistory.length === 0) {
-        setTimeout(() => addMsg('שלום! 👋 אני הבוט של אריאל סיבוני מתווך נדל"ן ריימקס. איזה סוג נכס אתה מחפש ומה התקציב שלך? 🏠', 'bot'), 300);
-    }
-});
-document.getElementById('chatClose').addEventListener('click', () => { chatOpen = false; document.getElementById('chatWindow').classList.remove('open'); });
-document.getElementById('chatSend').addEventListener('click', () => sendMessage(document.getElementById('chatInput').value));
-document.getElementById('chatInput').addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(document.getElementById('chatInput').value); });
+async function openProperty(index) {
+  const p = filteredProperties[index];
+  document.getElementById('propNavTitle').textContent = p['כתובת'];
+  document.getElementById('propTitle').textContent = p['כתובת'];
+  document.getElementById('propCity').textContent = p['עיר'] || '';
+  document.getElementById('propPrice').textContent = formatPrice(p['מחיר']);
+  const statusEl = document.getElementById('propStatus');
+  statusEl.textContent = p['סטטוס'] || 'למכירה';
+  statusEl.className = 'property-status ' + (p['סטטוס'] === 'להשכרה' ? 'rent' : 'sale');
+  document.getElementById('propSpecs').innerHTML = (p['חדרים'] ? '<div class="spec"><div class="spec-icon">🛏</div><div class="spec-label">חדרים</div><div class="spec-value">' + p['חדרים'] + '</div></div>' : '') + (p['מטרים'] ? '<div class="spec"><div class="spec-icon">📐</div><div class="spec-label">מ"ר</div><div class="spec-value">' + p['מטרים'] + '</div></div>' : '') + (p['קומה'] ? '<div class="spec"><div class="spec-icon">🏢</div><div class="spec-label">קומה</div><div class="spec-value">' + p['קומה'] + '</div></div>' : '') + (p['כיוון'] ? '<div class="spec"><div class="spec-icon">🧭</div><div class="spec-label">כיוון</div><div class="spec-value">' + p['כיוון'] + '</div></div>' : '');
+  document.getElementById('propDesc').innerHTML = p['תיאור'] ? '<h3>תיאור הנכס</h3><p>' + p['תיאור'] + '</p>' : '';
+  const mapAddr = encodeURIComponent(p['כתובת'] + ' ' + (p['עיר'] || '') + ' ישראל');
+  document.getElementById('propMap').src = 'https://maps.google.com/maps?q=' + mapAddr + '&output=embed&z=15';
+  await loadGallery(p['תמונות']);
+  document.getElementById('propertyPage').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('propertyPage').scrollTop = 0;
+}
 
-// Init
-renderCards(0, BATCH);
-</script>
-</body>
-</html>
+function closePropPage() { document.getElementById('propertyPage').classList.remove('active'); document.body.style.overflow = ''; document.getElementById('propMap').src = ''; }
+
+async function loadGallery(driveUrl) {
+  const gallery = document.getElementById('propGallery');
+  gallery.innerHTML = '<div class="gallery-loading">טוען תמונות...</div>';
+  currentImages = [];
+  if (!driveUrl) { gallery.innerHTML = '<div class="gallery-loading">אין תמונות</div>'; return; }
+  const match = driveUrl.match(/folders\/([^/?]+)/);
+  if (!match) { gallery.innerHTML = '<div class="gallery-loading">שגיאה</div>'; return; }
+  const folderId = match[1];
+  try {
+    const res = await fetch('https://www.googleapis.com/drive/v3/files?q='' + folderId + ''+in+parents+and+mimeType+contains+'image'&key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&fields=files(id,name)');
+    const data = await res.json();
+    if (data.files && data.files.length > 0) { currentImages = data.files.map(f => 'https://drive.google.com/thumbnail?id=' + f.id + '&sz=w1200'); }
+    else { currentImages = ['https://drive.google.com/thumbnail?id=' + folderId + '&sz=w1200']; }
+  } catch(e) { currentImages = ['https://drive.google.com/thumbnail?id=' + folderId + '&sz=w1200']; }
+  renderGallery();
+}
