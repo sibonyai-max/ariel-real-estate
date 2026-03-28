@@ -145,8 +145,9 @@ nav ul a:hover { color: #fff; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* PROPERTY PAGE */
-.property-page { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 9999; overflow-y: auto; }
+.property-page { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 9999; overflow-y: auto; direction: ltr; }
 .property-page.active { display: block; }
+.property-page > * { direction: rtl; }
 .property-nav { background: var(--dark); padding: 20px 60px; display: flex; align-items: center; gap: 20px; position: sticky; top: 0; z-index: 10; }
 .property-back { background: none; border: 1px solid #555; color: #fff; padding: 8px 20px; cursor: pointer; font-size: 13px; font-family: 'Heebo', sans-serif; letter-spacing: 1px; transition: all 0.3s; }
 .property-back:hover { background: #fff; color: var(--dark); }
@@ -684,11 +685,15 @@ function closePropPage() {
   history.back();
 }
 
+let lightboxIsOpen = false;
+
 window.addEventListener('popstate', () => {
-  // אם הלייטבוקס פתוח — סגור אותו קודם
-  if (document.getElementById('lightbox').classList.contains('active')) {
+  if (lightboxIsOpen) {
+    // סגור רק את הלייטבוקס — נכס נשאר פתוח
+    lightboxIsOpen = false;
     document.getElementById('lightbox').classList.remove('active');
   } else {
+    // סגור את דף הנכס
     document.getElementById('propertyPage').classList.remove('active');
     document.body.style.overflow = '';
     document.getElementById('propMap').src = '';
@@ -741,10 +746,11 @@ function openLightbox(index) {
   document.getElementById('lightboxImg').src = currentImages[index];
   document.getElementById('lightbox').classList.add('active');
   updateLightboxCounter();
+  lightboxIsOpen = true;
   history.pushState({ lightbox: true }, '');
 }
 function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('active');
+  // לא מסירים active כאן — popstate יעשה זאת
   history.back();
 }
 function lightboxPrev() {
