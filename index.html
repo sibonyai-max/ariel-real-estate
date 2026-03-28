@@ -19,9 +19,10 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { font-family: 'Heebo', sans-serif; background: var(--bg); color: var(--dark); direction: rtl; }
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--dark); border-radius: 4px; }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #c5c2bb; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #999; }
 h1, h2, h3, .logo { font-family: 'Playfair Display', serif; }
 
 /* NAV */
@@ -188,11 +189,14 @@ nav ul a:hover { color: #fff; }
 .property-contact textarea { height: 100px; resize: vertical; }
 
 /* LIGHTBOX */
-.lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 99999; justify-content: center; align-items: center; }
+.lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.72); z-index: 99999; justify-content: center; align-items: center; }
 .lightbox.active { display: flex; }
-.lightbox img { max-width: 90%; max-height: 90vh; object-fit: contain; }
-.lightbox-close { position: absolute; top: 20px; left: 20px; background: none; border: 1px solid #555; color: #fff; width: 40px; height: 40px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-.lightbox-prev, .lightbox-next { position: absolute; top: 50%; transform: translateY(-50%); background: none; border: 1px solid #555; color: #fff; width: 50px; height: 50px; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.lightbox img { max-width: 90%; max-height: 90vh; object-fit: contain; border-radius: 2px; }
+.lightbox-close { position: absolute; top: 20px; left: 20px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #fff; width: 40px; height: 40px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 50%; backdrop-filter: blur(4px); }
+.lightbox-close:hover { background: rgba(255,255,255,0.3); }
+.lightbox-counter { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.5); color: #fff; font-size: 14px; font-family: 'Heebo', sans-serif; padding: 6px 18px; border-radius: 20px; letter-spacing: 2px; backdrop-filter: blur(4px); }
+.lightbox-prev, .lightbox-next { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #fff; width: 50px; height: 50px; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 50%; backdrop-filter: blur(4px); transition: background 0.2s; }
+.lightbox-prev:hover, .lightbox-next:hover { background: rgba(255,255,255,0.3); }
 .lightbox-prev { right: 20px; }
 .lightbox-next { left: 20px; }
 
@@ -417,6 +421,7 @@ footer a { color: var(--muted); text-decoration: none; }
   <button class="lightbox-prev" onclick="lightboxPrev()">›</button>
   <img id="lightboxImg" src="" alt="תמונת נכס">
   <button class="lightbox-next" onclick="lightboxNext()">‹</button>
+  <div class="lightbox-counter" id="lightboxCounter">1 / 1</div>
 </div>
 
 <div class="chat-bubble" id="chatBubble">
@@ -680,9 +685,14 @@ function closePropPage() {
 }
 
 window.addEventListener('popstate', () => {
-  document.getElementById('propertyPage').classList.remove('active');
-  document.body.style.overflow = '';
-  document.getElementById('propMap').src = '';
+  // אם הלייטבוקס פתוח — סגור אותו קודם
+  if (document.getElementById('lightbox').classList.contains('active')) {
+    document.getElementById('lightbox').classList.remove('active');
+  } else {
+    document.getElementById('propertyPage').classList.remove('active');
+    document.body.style.overflow = '';
+    document.getElementById('propMap').src = '';
+  }
 });
 
 // ── Gallery ───────────────────────────────────────────
@@ -722,19 +732,30 @@ function selectImage(index) {
 }
 
 // ── Lightbox ──────────────────────────────────────────
+function updateLightboxCounter() {
+  document.getElementById('lightboxCounter').textContent =
+    `${lightboxIndex + 1} / ${currentImages.length}`;
+}
 function openLightbox(index) {
   lightboxIndex = index;
   document.getElementById('lightboxImg').src = currentImages[index];
   document.getElementById('lightbox').classList.add('active');
+  updateLightboxCounter();
+  history.pushState({ lightbox: true }, '');
 }
-function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); }
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+  history.back();
+}
 function lightboxPrev() {
   lightboxIndex = (lightboxIndex + 1) % currentImages.length;
   document.getElementById('lightboxImg').src = currentImages[lightboxIndex];
+  updateLightboxCounter();
 }
 function lightboxNext() {
   lightboxIndex = (lightboxIndex - 1 + currentImages.length) % currentImages.length;
   document.getElementById('lightboxImg').src = currentImages[lightboxIndex];
+  updateLightboxCounter();
 }
 
 // ── WhatsApp ──────────────────────────────────────────
