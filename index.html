@@ -859,6 +859,18 @@ document.getElementById('chatInput').addEventListener('keypress', e => {
   if (e.key === 'Enter') sendChatMessage(document.getElementById('chatInput').value);
 });
 
+// מניעת hash links מלדחוף היסטוריה — גלילה חלקה בלבד
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="#"]');
+  if (a && a.hash) {
+    const target = document.querySelector(a.hash);
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+});
+
 loadProperties();
 </script>
 </body>
