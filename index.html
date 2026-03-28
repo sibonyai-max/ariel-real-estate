@@ -685,19 +685,12 @@ function closePropPage() {
   history.back();
 }
 
-let lightboxIsOpen = false;
-
 window.addEventListener('popstate', () => {
-  if (lightboxIsOpen) {
-    // סגור רק את הלייטבוקס — נכס נשאר פתוח
-    lightboxIsOpen = false;
-    document.getElementById('lightbox').classList.remove('active');
-  } else {
-    // סגור את דף הנכס
-    document.getElementById('propertyPage').classList.remove('active');
-    document.body.style.overflow = '';
-    document.getElementById('propMap').src = '';
-  }
+  // סגור לייטבוקס אם פתוח, ואז סגור את דף הנכס
+  document.getElementById('lightbox').classList.remove('active');
+  document.getElementById('propertyPage').classList.remove('active');
+  document.body.style.overflow = '';
+  document.getElementById('propMap').src = '';
 });
 
 // ── Gallery ───────────────────────────────────────────
@@ -746,12 +739,9 @@ function openLightbox(index) {
   document.getElementById('lightboxImg').src = currentImages[index];
   document.getElementById('lightbox').classList.add('active');
   updateLightboxCounter();
-  lightboxIsOpen = true;
-  history.pushState({ lightbox: true }, '');
 }
 function closeLightbox() {
-  // לא מסירים active כאן — popstate יעשה זאת
-  history.back();
+  document.getElementById('lightbox').classList.remove('active');
 }
 function lightboxPrev() {
   lightboxIndex = (lightboxIndex + 1) % currentImages.length;
