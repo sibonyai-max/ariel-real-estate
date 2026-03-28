@@ -19,9 +19,10 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { font-family: 'Heebo', sans-serif; background: var(--bg); color: var(--dark); direction: rtl; }
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--dark); border-radius: 4px; }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #c5c2bb; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #999; }
 h1, h2, h3, .logo { font-family: 'Playfair Display', serif; }
 
 /* NAV */
@@ -680,9 +681,14 @@ function closePropPage() {
 }
 
 window.addEventListener('popstate', () => {
-  document.getElementById('propertyPage').classList.remove('active');
-  document.body.style.overflow = '';
-  document.getElementById('propMap').src = '';
+  // אם הלייטבוקס פתוח — סגור אותו קודם
+  if (document.getElementById('lightbox').classList.contains('active')) {
+    document.getElementById('lightbox').classList.remove('active');
+  } else {
+    document.getElementById('propertyPage').classList.remove('active');
+    document.body.style.overflow = '';
+    document.getElementById('propMap').src = '';
+  }
 });
 
 // ── Gallery ───────────────────────────────────────────
@@ -726,8 +732,12 @@ function openLightbox(index) {
   lightboxIndex = index;
   document.getElementById('lightboxImg').src = currentImages[index];
   document.getElementById('lightbox').classList.add('active');
+  history.pushState({ lightbox: true }, '');
 }
-function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); }
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+  history.back();
+}
 function lightboxPrev() {
   lightboxIndex = (lightboxIndex + 1) % currentImages.length;
   document.getElementById('lightboxImg').src = currentImages[lightboxIndex];
