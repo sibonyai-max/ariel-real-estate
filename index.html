@@ -441,30 +441,40 @@ let currentImages = [];
 let lightboxIndex = 0;
 
 // ── CSV ──────────────────────────────────────────────
-function parseCSVRow(row) {
-  const result = [];
+// פרסר מלא — תומך בשדות עם פסיקים, מרכאות ושורות חדשות בתוך תא
+function parseCSV(text) {
+  const rows = [];
+  let row = [];
   let current = '';
   let inQuotes = false;
-  for (const c of row) {
-    if (c === '"') { inQuotes = !inQuotes; }
-    else if (c === ',' && !inQuotes) { result.push(current); current = ''; }
-    else { current += c; }
+  const t = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+  for (let i = 0; i < t.length; i++) {
+    const c = t[i];
+    if (inQuotes) {
+      if (c === '"' && t[i + 1] === '"') { current += '"'; i++; }
+      else if (c === '"') { inQuotes = false; }
+      else { current += c; }
+    } else {
+      if (c === '"') { inQuotes = true; }
+      else if (c === ',') { row.push(current); current = ''; }
+      else if (c === '\n') { row.push(current); rows.push(row); row = []; current = ''; }
+      else { current += c; }
+    }
   }
-  result.push(current);
-  return result;
+  if (current || row.length > 0) { row.push(current); rows.push(row); }
+  return rows;
 }
 
 async function loadProperties() {
   try {
     const res = await fetch(SHEET_CSV);
-    const csv = (await res.text()).replace(/\r/g, '');
-    const rows = csv.trim().split('\n');
-    const headers = parseCSVRow(rows[0]).map(h => h.trim());
+    const csv = await res.text();
+    const rows = parseCSV(csv);
+    const headers = rows[0].map(h => h.trim());
     allProperties = rows.slice(1)
       .map(row => {
-        const vals = parseCSVRow(row);
         const obj = {};
-        headers.forEach((h, i) => { obj[h] = (vals[i] || '').trim(); });
+        headers.forEach((h, i) => { obj[h] = (row[i] || '').trim(); });
         return obj;
       })
       .filter(p => p['פעיל'] === 'כן' && p['כתובת']);
