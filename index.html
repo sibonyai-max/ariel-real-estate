@@ -451,7 +451,6 @@ let allProperties = [];
 let filteredProperties = [];
 let currentImages = [];
 let lightboxIndex = 0;
-let lightboxInHistory = false;
 
 // ── CSV ──────────────────────────────────────────────
 // פרסר מלא — תומך בשדות עם פסיקים, מרכאות ושורות חדשות בתוך תא
@@ -686,19 +685,11 @@ function closePropPage() {
   history.back();
 }
 
-window.addEventListener('popstate', (e) => {
-  if (e.state && e.state.prop) {
-    // חזרנו לסטייט של הנכס — סגור רק לייטבוקס
-    document.getElementById('lightbox').classList.remove('active');
-    lightboxInHistory = false;
-  } else {
-    // חזרנו לדף הראשי — סגור הכל
-    document.getElementById('lightbox').classList.remove('active');
-    document.getElementById('propertyPage').classList.remove('active');
-    document.body.style.overflow = '';
-    document.getElementById('propMap').src = '';
-    lightboxInHistory = false;
-  }
+window.addEventListener('popstate', () => {
+  document.getElementById('lightbox').classList.remove('active');
+  document.getElementById('propertyPage').classList.remove('active');
+  document.body.style.overflow = '';
+  document.getElementById('propMap').src = '';
 });
 
 // ── Gallery ───────────────────────────────────────────
@@ -747,15 +738,9 @@ function openLightbox(index) {
   document.getElementById('lightboxImg').src = currentImages[index];
   document.getElementById('lightbox').classList.add('active');
   updateLightboxCounter();
-  if (!lightboxInHistory) {
-    history.pushState({ lightbox: true }, '');
-    lightboxInHistory = true;
-  }
 }
 function closeLightbox() {
   document.getElementById('lightbox').classList.remove('active');
-  lightboxInHistory = false;
-  history.back();
 }
 function lightboxPrev() {
   lightboxIndex = (lightboxIndex + 1) % currentImages.length;
