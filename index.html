@@ -529,7 +529,7 @@ function applyFilters() {
       else               { if (Math.floor(r) !== parseFloat(rooms)) return false; }
     }
     if (priceActive) {
-      const pr = parseFloat(p['מחיר']);
+      const pr = parsePrice(p['מחיר']);
       if (pr < priceMin || pr > priceMax) return false;
     }
     return true;
@@ -551,8 +551,12 @@ function resetFilters() {
 );
 
 // ── Helpers ──────────────────────────────────────────
+function parsePrice(price) {
+  return parseFloat(String(price).replace(/,/g, '')) || 0;
+}
+
 function formatPrice(price) {
-  const num = parseFloat(price);
+  const num = parsePrice(price);
   return num ? '₪' + num.toLocaleString('he-IL') : '';
 }
 
