@@ -451,6 +451,7 @@ let allProperties = [];
 let filteredProperties = [];
 let currentImages = [];
 let lightboxIndex = 0;
+let lightboxInHistory = false;
 
 // ── CSV ──────────────────────────────────────────────
 // פרסר מלא — תומך בשדות עם פסיקים, מרכאות ושורות חדשות בתוך תא
@@ -689,12 +690,14 @@ window.addEventListener('popstate', (e) => {
   if (e.state && e.state.prop) {
     // חזרנו לסטייט של הנכס — סגור רק לייטבוקס
     document.getElementById('lightbox').classList.remove('active');
+    lightboxInHistory = false;
   } else {
     // חזרנו לדף הראשי — סגור הכל
     document.getElementById('lightbox').classList.remove('active');
     document.getElementById('propertyPage').classList.remove('active');
     document.body.style.overflow = '';
     document.getElementById('propMap').src = '';
+    lightboxInHistory = false;
   }
 });
 
@@ -744,10 +747,14 @@ function openLightbox(index) {
   document.getElementById('lightboxImg').src = currentImages[index];
   document.getElementById('lightbox').classList.add('active');
   updateLightboxCounter();
-  history.pushState({ lightbox: true }, '');
+  if (!lightboxInHistory) {
+    history.pushState({ lightbox: true }, '');
+    lightboxInHistory = true;
+  }
 }
 function closeLightbox() {
   document.getElementById('lightbox').classList.remove('active');
+  lightboxInHistory = false;
   history.back();
 }
 function lightboxPrev() {
