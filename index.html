@@ -451,6 +451,8 @@ let allProperties = [];
 let filteredProperties = [];
 let currentImages = [];
 let lightboxIndex = 0;
+let propertyOpen = false;   // הגנה מפני דאבל-קליק
+let selectedThumbIndex = 0; // תמונה נבחרת בגלריה
 
 // ── CSV ──────────────────────────────────────────────
 // פרסר מלא — תומך בשדות עם פסיקים, מרכאות ושורות חדשות בתוך תא
@@ -628,6 +630,8 @@ function renderGrid() {
 
 // ── Property Page ─────────────────────────────────────
 function openProperty(index) {
+  if (propertyOpen) return; // הגנה מפני דאבל-קליק
+  propertyOpen = true;
   const p = filteredProperties[index];
   document.getElementById('propNavTitle').textContent = p['כתובת'];
   document.getElementById('propTitle').textContent    = p['כתובת'];
@@ -691,6 +695,7 @@ window.addEventListener('popstate', () => {
   document.getElementById('propertyPage').classList.remove('active');
   document.body.style.overflow = '';
   document.getElementById('propMap').src = '';
+  propertyOpen = false;
 });
 
 // ── Gallery ───────────────────────────────────────────
@@ -725,7 +730,9 @@ function renderGallery() {
 }
 
 function selectImage(index) {
+  selectedThumbIndex = index;
   document.getElementById('galleryMain').src = currentImages[index];
+  document.getElementById('galleryMain').setAttribute('onclick', `openLightbox(${index})`);
   document.querySelectorAll('.gallery-thumb').forEach((t, i) => t.classList.toggle('active', i === index));
 }
 
@@ -857,6 +864,24 @@ document.getElementById('chatSend').addEventListener('click', () =>
 );
 document.getElementById('chatInput').addEventListener('keypress', e => {
   if (e.key === 'Enter') sendChatMessage(document.getElementById('chatInput').value);
+});
+
+// ── Keyboard ─────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  // Escape — סגור לייטבוקס או דף נכס
+  if (e.key === 'Escape') {
+    if (document.getElementById('lightbox').classList.contains('active')) {
+      closeLightbox();
+    } else if (document.getElementById('propertyPage').classList.contains('active')) {
+      closePropPage();
+    }
+    return;
+  }
+  // חצים — ניווט בלייטבוקס
+  if (document.getElementById('lightbox').classList.contains('active')) {
+    if (e.key === 'ArrowRight') lightboxPrev();
+    if (e.key === 'ArrowLeft')  lightboxNext();
+  }
 });
 
 // מניעת hash links מלדחוף היסטוריה — גלילה חלקה בלבד
