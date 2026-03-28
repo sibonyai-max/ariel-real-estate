@@ -283,7 +283,8 @@ async function loadProperties() {
     const res = await fetch(SHEET_CSV);
     const csv = await res.text();
     const rows = csv.trim().split('\n');
-    const headers = rows[0].split(',').map(h => h.trim().replace(/"/g, ''));
+    const headers = rows[0].split(',').map(h => h.trim().replace(/"/g,'').replace(/
+/g,''));
     allProperties = rows.slice(1).map(row => {
       const vals = parseCSVRow(row);
       const obj = {};
