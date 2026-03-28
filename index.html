@@ -63,11 +63,65 @@ nav ul a:hover { color: #fff; }
 .properties { padding: 100px 60px; background: var(--bg); }
 .properties h2 { text-align: center; font-size: 40px; color: var(--dark); margin-bottom: 15px; font-weight: 700; }
 .properties .subtitle { text-align: center; color: #777; margin-bottom: 40px; letter-spacing: 1px; font-size: 18px; }
-.filters { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px; }
-.filter-select { padding: 10px 20px; border: 1px solid #ccc; background: #fff; font-size: 14px; font-family: 'Heebo', sans-serif; cursor: pointer; color: var(--dark); min-width: 150px; }
+
+/* NEW FILTER BAR */
+.filters {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px; margin-bottom: 40px;
+  background: #fff; border: 1px solid #e0ddd8; padding: 18px 24px;
+  flex-wrap: wrap;
+}
+.filter-select {
+  padding: 9px 14px; border: 1px solid #ddd; background: #fff;
+  font-size: 14px; font-family: 'Heebo', sans-serif; cursor: pointer;
+  color: var(--dark); border-radius: 4px; min-width: 130px;
+  appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23999'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: left 10px center;
+}
 .filter-select:focus { outline: none; border-color: var(--dark); }
-.filter-reset { padding: 10px 20px; background: transparent; color: var(--dark); border: 1px solid var(--dark); font-size: 14px; font-family: 'Heebo', sans-serif; cursor: pointer; transition: all 0.3s; }
-.filter-reset:hover { background: var(--dark); color: #fff; }
+.filter-dropdowns { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* PRICE RANGE SLIDER */
+.filter-price { display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 220px; flex: 1; max-width: 320px; }
+.filter-price-label { font-size: 13px; color: var(--muted); letter-spacing: 1px; }
+.price-slider-wrap { position: relative; width: 100%; height: 20px; }
+.price-slider-track { position: absolute; top: 50%; transform: translateY(-50%); width: 100%; height: 4px; background: #ddd; border-radius: 2px; }
+.price-slider-fill { position: absolute; top: 50%; transform: translateY(-50%); height: 4px; background: var(--dark); border-radius: 2px; pointer-events: none; }
+.price-range-input {
+  position: absolute; width: 100%; top: 50%; transform: translateY(-50%);
+  -webkit-appearance: none; appearance: none;
+  height: 4px; background: transparent; pointer-events: none; margin: 0;
+}
+.price-range-input::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--dark); cursor: pointer; pointer-events: all;
+  border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+.price-range-input::-moz-range-thumb {
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--dark); cursor: pointer; pointer-events: all;
+  border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+.price-inputs { display: flex; gap: 8px; align-items: center; direction: ltr; }
+.price-input {
+  width: 90px; padding: 5px 8px; border: 1px solid #ddd; font-size: 13px;
+  font-family: 'Heebo', sans-serif; color: var(--dark); text-align: center;
+  border-radius: 4px;
+}
+.price-input:focus { outline: none; border-color: var(--dark); }
+.price-sep { color: var(--muted); font-size: 13px; }
+
+/* ADVANCED BUTTON */
+.filter-advanced {
+  padding: 10px 20px; background: var(--mid); color: #fff;
+  border: none; font-size: 14px; font-family: 'Heebo', sans-serif;
+  cursor: pointer; border-radius: 4px; white-space: nowrap;
+  transition: background 0.3s; letter-spacing: 0.5px;
+}
+.filter-advanced:hover { background: var(--dark); }
+.filter-reset { display: none; }
 .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
 .card { background: var(--card-bg); overflow: hidden; border: 1px solid var(--light); transition: all 0.3s; cursor: pointer; }
 .card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); border-color: var(--dark); }
@@ -188,6 +242,11 @@ footer a { color: var(--muted); text-decoration: none; }
   .about-img { width: 100%; height: 300px; }
   .properties { padding: 60px 20px; }
   .grid { grid-template-columns: 1fr; }
+  .filters { flex-direction: column; align-items: stretch; }
+  .filter-dropdowns { flex-direction: column; }
+  .filter-dropdowns .filter-select { width: 100%; }
+  .filter-price { max-width: 100%; width: 100%; }
+  .filter-advanced { width: 100%; }
   .contact { padding: 60px 20px; }
   .contact-options { gap: 40px; }
   .chat-window { width: calc(100vw - 20px); right: 10px; bottom: 100px; }
@@ -250,28 +309,42 @@ footer a { color: var(--muted); text-decoration: none; }
   <h2>נכסים מובילים למכירה</h2>
   <p class="subtitle">כל הנכסים בליווי אישי ומקצועי — עד לסגירת העסקה</p>
   <div class="filters">
-    <select class="filter-select" id="filterCity"><option value="">כל הערים</option></select>
-    <select class="filter-select" id="filterRooms">
-      <option value="">כל החדרים</option>
-      <option value="1">1 חדר</option>
-      <option value="2">2 חדרים</option>
-      <option value="3">3 חדרים</option>
-      <option value="4">4 חדרים</option>
-      <option value="5">5+ חדרים</option>
-    </select>
-    <select class="filter-select" id="filterPrice">
-      <option value="">כל המחירים</option>
-      <option value="0-1500000">עד 1.5M</option>
-      <option value="1500000-2500000">1.5M - 2.5M</option>
-      <option value="2500000-4000000">2.5M - 4M</option>
-      <option value="4000000-999999999">מעל 4M</option>
-    </select>
-    <select class="filter-select" id="filterStatus">
-      <option value="">הכל</option>
-      <option value="למכירה">למכירה</option>
-      <option value="להשכרה">להשכרה</option>
-    </select>
-    <button class="filter-reset" onclick="resetFilters()">נקה</button>
+    <!-- Left: Advanced / Reset -->
+    <button class="filter-advanced" onclick="resetFilters()">חיפוש מתקדם</button>
+
+    <!-- Center: Price range slider -->
+    <div class="filter-price">
+      <div class="filter-price-label">מחיר</div>
+      <div class="price-slider-wrap">
+        <div class="price-slider-track"></div>
+        <div class="price-slider-fill" id="sliderFill"></div>
+        <input type="range" class="price-range-input" id="priceMin" min="0" max="10000000" step="50000" value="0">
+        <input type="range" class="price-range-input" id="priceMax" min="0" max="10000000" step="50000" value="10000000">
+      </div>
+      <div class="price-inputs">
+        <input type="text" class="price-input" id="priceMinDisplay" value="0" readonly>
+        <span class="price-sep">—</span>
+        <input type="text" class="price-input" id="priceMaxDisplay" value="10,000,000" readonly>
+      </div>
+    </div>
+
+    <!-- Right: Dropdowns -->
+    <div class="filter-dropdowns">
+      <select class="filter-select" id="filterStatus">
+        <option value="">סטטוס</option>
+        <option value="למכירה">למכירה</option>
+        <option value="להשכרה">להשכרה</option>
+      </select>
+      <select class="filter-select" id="filterRooms">
+        <option value="">חדרים</option>
+        <option value="1">1 חדר</option>
+        <option value="2">2 חדרים</option>
+        <option value="3">3 חדרים</option>
+        <option value="4">4 חדרים</option>
+        <option value="5">5+ חדרים</option>
+      </select>
+      <select class="filter-select" id="filterCity"><option value="">עיר</option></select>
+    </div>
   </div>
   <p class="props-counter" id="propsCounter"></p>
   <div class="grid" id="grid">
@@ -416,24 +489,48 @@ function populateCityFilter() {
   });
 }
 
+// ── Price Slider ──────────────────────────────────────
+const PRICE_MAX = 10000000;
+
+function updateSlider() {
+  const minEl = document.getElementById('priceMin');
+  const maxEl = document.getElementById('priceMax');
+  let min = parseInt(minEl.value);
+  let max = parseInt(maxEl.value);
+  if (min > max) { min = max; minEl.value = min; }
+  const pct1 = (min / PRICE_MAX) * 100;
+  const pct2 = (max / PRICE_MAX) * 100;
+  document.getElementById('sliderFill').style.left  = pct1 + '%';
+  document.getElementById('sliderFill').style.width = (pct2 - pct1) + '%';
+  document.getElementById('priceMinDisplay').value = min.toLocaleString('he-IL');
+  document.getElementById('priceMaxDisplay').value = max.toLocaleString('he-IL');
+  applyFilters();
+}
+
+document.getElementById('priceMin').addEventListener('input', updateSlider);
+document.getElementById('priceMax').addEventListener('input', updateSlider);
+updateSlider();
+
 // ── Filters ──────────────────────────────────────────
 function applyFilters() {
   const city   = document.getElementById('filterCity').value;
   const rooms  = document.getElementById('filterRooms').value;
-  const price  = document.getElementById('filterPrice').value;
   const status = document.getElementById('filterStatus').value;
+  const priceMin = parseInt(document.getElementById('priceMin').value);
+  const priceMax = parseInt(document.getElementById('priceMax').value);
+  const priceActive = priceMin > 0 || priceMax < PRICE_MAX;
+
   filteredProperties = allProperties.filter(p => {
-    if (city   && p['עיר']    !== city)   return false;
-    if (status && p['סטטוס']  !== status) return false;
+    if (city   && p['עיר']   !== city)   return false;
+    if (status && p['סטטוס'] !== status) return false;
     if (rooms) {
       const r = parseFloat(p['חדרים']);
       if (rooms === '5') { if (r < 5) return false; }
       else               { if (Math.floor(r) !== parseFloat(rooms)) return false; }
     }
-    if (price) {
-      const [min, max] = price.split('-').map(Number);
+    if (priceActive) {
       const pr = parseFloat(p['מחיר']);
-      if (pr < min || pr > max) return false;
+      if (pr < priceMin || pr > priceMax) return false;
     }
     return true;
   });
@@ -441,14 +538,15 @@ function applyFilters() {
 }
 
 function resetFilters() {
-  ['filterCity','filterRooms','filterPrice','filterStatus'].forEach(id => {
+  ['filterCity','filterRooms','filterStatus'].forEach(id => {
     document.getElementById(id).value = '';
   });
-  filteredProperties = [...allProperties];
-  renderGrid();
+  document.getElementById('priceMin').value = 0;
+  document.getElementById('priceMax').value = PRICE_MAX;
+  updateSlider();
 }
 
-['filterCity','filterRooms','filterPrice','filterStatus'].forEach(id =>
+['filterCity','filterRooms','filterStatus'].forEach(id =>
   document.getElementById(id).addEventListener('change', applyFilters)
 );
 
