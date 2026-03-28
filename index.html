@@ -441,12 +441,12 @@ function openProperty(index) {
   var mapAddr = encodeURIComponent(p['כתובת'] + ' ' + (p['עיר'] || '') + ' ישראל');
   document.getElementById('propMap').src = 'https://maps.google.com/maps?q=' + mapAddr + '&output=embed&z=15';
   loadGallery(p['תמונות']);
-  document.getElementById('propertyPage').classList.add('active');
+  history.pushState({prop: true}, '');   document.getElementById('propertyPage').classList.add('active');
   document.body.style.overflow = 'hidden';
   document.getElementById('propertyPage').scrollTop = 0;
 }
 
-function closePropPage() {
+window.addEventListener('popstate', function() { if (document.getElementById('propertyPage').classList.contains('active')) { closePropPage(); } }); function closePropPage() {
   document.getElementById('propertyPage').classList.remove('active');
   document.body.style.overflow = '';
   document.getElementById('propMap').src = '';
