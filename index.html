@@ -289,9 +289,7 @@ async function loadProperties() {
       const obj = {};
       headers.forEach((h, i) => obj[h] = (vals[i] || '').trim().replace(/"/g, ''));
       return obj;
-    }).filter(p => { const v=(p['פעיל']||'').replace(/[
-\s]/g,''); return v==='כן'&&p['כתובת'];
-/g,'') === 'כן' && p['כתובת']);
+   }).filter(p => p['פעיל'] === 'כן' && p['כתובת']);
     populateCityFilter();
     filteredProperties = [...allProperties];
     renderGrid();
