@@ -383,7 +383,7 @@ function formatPrice(price) {
   return '\u20AA' + num.toLocaleString('he-IL');
 }
 
-function getFirstImage(driveUrl) {
+function getFirstImage(driveUrl, coverUrl) {   if (coverUrl) { var cm = coverUrl.match(/[-\w]{25,}/); if (cm) return 'https://drive.google.com/thumbnail?id=' + cm[0] + '&sz=w400'; }
   if (!driveUrl) return 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&h=250&fit=crop';
   var match = driveUrl.match(/folders\/([^/?]+)/);
   if (!match) return 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&h=250&fit=crop';
@@ -404,7 +404,7 @@ function renderGrid() {
     var p = filteredProperties[i];
     var sc = p['סטטוס'] === 'להשכרה' ? 'rent' : 'sale';
     html += '<div class="card" onclick="openProperty(' + i + ')">';
-    html += '<img class="card-img" src="' + getFirstImage(p['תמונות']) + '" alt="' + p['כתובת'] + '" onerror="this.src=\'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&h=250&fit=crop\'">';
+    html += '<img class="card-img" src="' + getFirstImage(p['תמונות'], p['תמונה ראשית']) + '" alt="' + p['כתובת'] + '" onerror="this.src=\'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&h=250&fit=crop\'">';
     html += '<div class="card-body">';
     html += '<div class="card-badges"><span class="badge badge-' + sc + '">' + (p['סטטוס'] || 'למכירה') + '</span>';
     if (p['עיר']) html += '<span class="badge" style="background:#f0ede6;color:#666">' + p['עיר'] + '</span>';
