@@ -862,11 +862,9 @@ document.getElementById('chatInput').addEventListener('keypress', e => {
 document.addEventListener('click', e => {
   const a = e.target.closest('a[href^="#"]');
   if (a && a.hash) {
+    e.preventDefault();
     const target = document.querySelector(a.hash);
-    if (target) {
-      e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth' });
-    }
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
   }
 });
 
