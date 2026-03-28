@@ -6,99 +6,129 @@
 <title>אריאל סיבוני | מתווך נדל"ן - ריימקס</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Heebo:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+:root {
+  --bg: #f5f3ef;
+  --dark: #111;
+  --mid: #555;
+  --light: #eee;
+  --text: #333;
+  --muted: #999;
+  --cream: #eeebe4;
+  --card-bg: #faf8f5;
+}
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { font-family: 'Heebo', sans-serif; background: #f5f3ef; color: #111; direction: rtl; } ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #f5f3ef; } ::-webkit-scrollbar-thumb { background: #111; border-radius: 4px; }
+body { font-family: 'Heebo', sans-serif; background: var(--bg); color: var(--dark); direction: rtl; }
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--dark); border-radius: 4px; }
 h1, h2, h3, .logo { font-family: 'Playfair Display', serif; }
-nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 60px; background: #111; position: fixed; width: 100%; top: 0; z-index: 100; border-bottom: 1px solid #333; }
+
+/* NAV */
+nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 60px; background: var(--dark); position: fixed; width: 100%; top: 0; z-index: 100; border-bottom: 1px solid #333; }
 .logo { font-size: 22px; font-weight: 700; color: #fff; letter-spacing: 1px; }
 .logo span { color: #aaa; font-size: 13px; display: block; font-weight: 300; font-family: 'Heebo', sans-serif; letter-spacing: 2px; }
 nav ul { list-style: none; display: flex; gap: 35px; align-items: center; }
 nav ul a { color: #ccc; text-decoration: none; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; transition: color 0.3s; }
 nav ul a:hover { color: #fff; }
 .nav-whatsapp { background: transparent; color: #fff !important; padding: 10px 22px; letter-spacing: 1px; transition: all 0.3s !important; border: 1px solid rgba(255,255,255,0.4); }
-.hero { height: 100vh; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('city.png') center/cover; display: flex; align-items: center; justify-content: center; text-align: center; }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 5px; }
+.hamburger span { display: block; width: 24px; height: 2px; background: #fff; transition: all 0.3s; }
+.mobile-menu { display: none; position: fixed; top: 65px; left: 0; width: 100%; background: var(--dark); padding: 20px; flex-direction: column; gap: 0; z-index: 99; border-top: 1px solid #333; }
+.mobile-menu.open { display: flex; }
+.mobile-menu a { color: #ccc; text-decoration: none; font-size: 16px; padding: 14px 0; border-bottom: 1px solid #222; }
+
+/* HERO */
+.hero { height: 100vh; background: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url('city.png') center/cover; display: flex; align-items: center; justify-content: center; text-align: center; }
 .hero h1 { font-size: 64px; color: #fff; margin-bottom: 20px; font-weight: 700; line-height: 1.2; letter-spacing: 2px; }
 .hero p { font-size: 18px; color: #ccc; margin-bottom: 10px; font-weight: 300; letter-spacing: 1px; }
-.hero .sub { font-size: 13px; color: #999; margin-bottom: 50px; letter-spacing: 3px; text-transform: uppercase; }
+.hero .sub { font-size: 13px; color: var(--muted); margin-bottom: 50px; letter-spacing: 3px; text-transform: uppercase; }
 .btn { background: transparent; color: #fff; padding: 15px 50px; border: 1px solid rgba(255,255,255,0.6); font-size: 15px; font-weight: 300; cursor: pointer; text-decoration: none; letter-spacing: 4px; text-transform: uppercase; display: inline-block; transition: all 0.5s ease; font-family: 'Playfair Display', serif; }
-.btn:hover { background: #fff; color: #111; border-color: #fff; }
-.btn-dark { background: #111; color: #fff; padding: 15px 35px; border: none; font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; letter-spacing: 2px; text-transform: uppercase; display: inline-block; transition: all 0.3s; font-family: 'Heebo', sans-serif; }
+.btn:hover { background: #fff; color: var(--dark); border-color: #fff; }
+.btn-dark { background: var(--dark); color: #fff; padding: 15px 35px; border: none; font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; letter-spacing: 2px; text-transform: uppercase; display: inline-block; transition: all 0.3s; font-family: 'Heebo', sans-serif; }
 .btn-dark:hover { background: #333; }
-.about { padding: 100px 60px; background: #eeebe4; display: flex; align-items: flex-start; gap: 60px; }
+
+/* ABOUT */
+.about { padding: 100px 60px; background: var(--cream); display: flex; align-items: flex-start; gap: 60px; }
 .about-img { width: 340px; height: 460px; object-fit: cover; object-position: top; flex-shrink: 0; filter: grayscale(20%); }
 .about-text { flex: 1; }
-.about-text h2 { font-size: 36px; color: #111; margin-bottom: 20px; font-weight: 700; }
-.about-text p { font-size: 19px; color: #333; line-height: 2.1; margin-bottom: 22px; font-weight: 300; }
+.about-text h2 { font-size: 36px; color: var(--dark); margin-bottom: 20px; font-weight: 700; }
+.about-text p { font-size: 19px; color: var(--text); line-height: 2.1; margin-bottom: 22px; font-weight: 300; }
 .stats { display: flex; gap: 50px; margin-top: 40px; flex-wrap: wrap; }
-.stat .num { font-size: 44px; font-weight: 700; color: #111; font-family: 'Playfair Display', serif; }
-.stat .label { font-size: 13px; color: #999; letter-spacing: 2px; text-transform: uppercase; margin-top: 5px; }
-.divider { width: 50px; height: 2px; background: #111; margin-bottom: 25px; }
-.properties { padding: 100px 60px; background: #f5f3ef; }
-.properties h2 { text-align: center; font-size: 40px; color: #111; margin-bottom: 15px; font-weight: 700; }
+.stat .num { font-size: 44px; font-weight: 700; color: var(--dark); font-family: 'Playfair Display', serif; }
+.stat .label { font-size: 13px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 5px; }
+.divider { width: 50px; height: 2px; background: var(--dark); margin-bottom: 25px; }
+
+/* PROPERTIES */
+.properties { padding: 100px 60px; background: var(--bg); }
+.properties h2 { text-align: center; font-size: 40px; color: var(--dark); margin-bottom: 15px; font-weight: 700; }
 .properties .subtitle { text-align: center; color: #777; margin-bottom: 40px; letter-spacing: 1px; font-size: 18px; }
 .filters { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px; }
-.filter-select { padding: 10px 20px; border: 1px solid #ccc; background: #fff; font-size: 14px; font-family: 'Heebo', sans-serif; cursor: pointer; color: #111; min-width: 150px; }
-.filter-select:focus { outline: none; border-color: #111; }
-.filter-reset { padding: 10px 20px; background: transparent; color: #111; border: 1px solid #111; font-size: 14px; font-family: 'Heebo', sans-serif; cursor: pointer; transition: all 0.3s; }
-.filter-reset:hover { background: #111; color: #fff; }
+.filter-select { padding: 10px 20px; border: 1px solid #ccc; background: #fff; font-size: 14px; font-family: 'Heebo', sans-serif; cursor: pointer; color: var(--dark); min-width: 150px; }
+.filter-select:focus { outline: none; border-color: var(--dark); }
+.filter-reset { padding: 10px 20px; background: transparent; color: var(--dark); border: 1px solid var(--dark); font-size: 14px; font-family: 'Heebo', sans-serif; cursor: pointer; transition: all 0.3s; }
+.filter-reset:hover { background: var(--dark); color: #fff; }
 .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
-.card { background: #faf8f5; overflow: hidden; border: 1px solid #eee; transition: all 0.3s; cursor: pointer; }
-.card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); border-color: #111; }
+.card { background: var(--card-bg); overflow: hidden; border: 1px solid var(--light); transition: all 0.3s; cursor: pointer; }
+.card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); border-color: var(--dark); }
 .card-img { width: 100%; height: 220px; object-fit: cover; background: #ddd; }
 .card-body { padding: 22px; }
 .card-badges { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
 .badge { font-size: 11px; padding: 4px 10px; letter-spacing: 1px; text-transform: uppercase; }
-.badge-sale { background: #111; color: #fff; }
-.badge-rent { background: #555; color: #fff; }
-.card-title { font-size: 17px; color: #111; margin-bottom: 12px; font-family: 'Playfair Display', serif; }
+.badge-sale { background: var(--dark); color: #fff; }
+.badge-rent { background: var(--mid); color: #fff; }
+.card-title { font-size: 17px; color: var(--dark); margin-bottom: 12px; font-family: 'Playfair Display', serif; }
 .card-details { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; }
 .card-detail { font-size: 13px; color: #666; }
-.card-price { font-size: 20px; font-weight: 700; color: #111; font-family: 'Playfair Display', serif; margin-bottom: 15px; }
-.card-btn { background: none; border: 1px solid #111; color: #111; padding: 10px 20px; cursor: pointer; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s; font-family: 'Heebo', sans-serif; width: 100%; text-align: center; }
-.card-btn:hover { background: #111; color: #fff; }
-.props-counter { text-align: center; color: #999; font-size: 13px; margin-bottom: 20px; letter-spacing: 1px; }
-.no-results { text-align: center; padding: 60px; color: #999; font-size: 18px; grid-column: 1/-1; }
+.card-price { font-size: 20px; font-weight: 700; color: var(--dark); font-family: 'Playfair Display', serif; margin-bottom: 15px; }
+.card-btn { background: none; border: 1px solid var(--dark); color: var(--dark); padding: 10px 20px; cursor: pointer; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s; font-family: 'Heebo', sans-serif; width: 100%; text-align: center; }
+.card-btn:hover { background: var(--dark); color: #fff; }
+.props-counter { text-align: center; color: var(--muted); font-size: 13px; margin-bottom: 20px; letter-spacing: 1px; }
+.no-results { text-align: center; padding: 60px; color: var(--muted); font-size: 18px; grid-column: 1/-1; }
 .loading { text-align: center; padding: 80px; grid-column: 1/-1; }
-.loading-spinner { width: 40px; height: 40px; border: 3px solid #eee; border-top-color: #111; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 20px; }
+.loading-spinner { width: 40px; height: 40px; border: 3px solid var(--light); border-top-color: var(--dark); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 20px; }
 @keyframes spin { to { transform: rotate(360deg); } }
-.property-page { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f5f3ef; z-index: 9999; overflow-y: auto; }
+
+/* PROPERTY PAGE */
+.property-page { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 9999; overflow-y: auto; }
 .property-page.active { display: block; }
-.property-nav { background: #111; padding: 20px 60px; display: flex; align-items: center; gap: 20px; position: sticky; top: 0; z-index: 10; }
+.property-nav { background: var(--dark); padding: 20px 60px; display: flex; align-items: center; gap: 20px; position: sticky; top: 0; z-index: 10; }
 .property-back { background: none; border: 1px solid #555; color: #fff; padding: 8px 20px; cursor: pointer; font-size: 13px; font-family: 'Heebo', sans-serif; letter-spacing: 1px; transition: all 0.3s; }
-.property-back:hover { background: #fff; color: #111; }
+.property-back:hover { background: #fff; color: var(--dark); }
 .property-nav-title { color: #fff; font-size: 16px; font-family: 'Playfair Display', serif; }
 .property-content { max-width: 1100px; margin: 0 auto; padding: 60px 40px; }
 .property-header { margin-bottom: 40px; }
-.property-header h1 { font-size: 36px; color: #111; margin-bottom: 10px; }
-.property-city { color: #999; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
-.property-price { font-size: 32px; font-weight: 700; color: #111; font-family: 'Playfair Display', serif; }
+.property-header h1 { font-size: 36px; color: var(--dark); margin-bottom: 10px; }
+.property-city { color: var(--muted); font-size: 14px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
+.property-price { font-size: 32px; font-weight: 700; color: var(--dark); font-family: 'Playfair Display', serif; }
 .property-status { display: inline-block; padding: 6px 15px; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
-.property-status.sale { background: #111; color: #fff; }
-.property-status.rent { background: #555; color: #fff; }
+.property-status.sale { background: var(--dark); color: #fff; }
+.property-status.rent { background: var(--mid); color: #fff; }
 .gallery { margin-bottom: 40px; }
 .gallery-main { width: 100%; height: 480px; object-fit: cover; margin-bottom: 10px; cursor: pointer; }
 .gallery-thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
 .gallery-thumb { width: 100%; height: 80px; object-fit: cover; cursor: pointer; opacity: 0.7; transition: opacity 0.3s; }
 .gallery-thumb:hover, .gallery-thumb.active { opacity: 1; }
-.gallery-loading { text-align: center; padding: 40px; color: #999; font-size: 16px; }
-.property-specs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; background: #fff; padding: 30px; margin-bottom: 40px; border: 1px solid #eee; }
+.gallery-loading { text-align: center; padding: 40px; color: var(--muted); font-size: 16px; }
+.property-specs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; background: #fff; padding: 30px; margin-bottom: 40px; border: 1px solid var(--light); }
 .spec { text-align: center; }
 .spec-icon { font-size: 28px; margin-bottom: 8px; }
-.spec-label { font-size: 12px; color: #999; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px; }
-.spec-value { font-size: 20px; font-weight: 700; color: #111; font-family: 'Playfair Display', serif; }
-.property-description { background: #fff; padding: 30px; margin-bottom: 40px; border: 1px solid #eee; }
+.spec-label { font-size: 12px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px; }
+.spec-value { font-size: 20px; font-weight: 700; color: var(--dark); font-family: 'Playfair Display', serif; }
+.property-description { background: #fff; padding: 30px; margin-bottom: 40px; border: 1px solid var(--light); }
 .property-description h3 { font-size: 20px; margin-bottom: 15px; }
-.property-description p { font-size: 16px; color: #333; line-height: 1.9; white-space: pre-line; }
+.property-description p { font-size: 16px; color: var(--text); line-height: 1.9; white-space: pre-line; }
 .property-map { margin-bottom: 40px; }
 .property-map h3 { font-size: 20px; margin-bottom: 15px; }
-.map-frame { width: 100%; height: 350px; border: 1px solid #eee; }
-.property-contact { background: #111; padding: 40px; color: #fff; margin-bottom: 40px; }
+.map-frame { width: 100%; height: 350px; border: 1px solid var(--light); }
+.property-contact { background: var(--dark); padding: 40px; color: #fff; margin-bottom: 40px; }
 .property-contact h3 { font-size: 24px; margin-bottom: 8px; }
-.property-contact p { color: #999; margin-bottom: 25px; font-size: 14px; }
+.property-contact p { color: var(--muted); margin-bottom: 25px; font-size: 14px; }
 .property-contact input, .property-contact textarea { width: 100%; padding: 12px 15px; background: #1a1a1a; border: 1px solid #333; color: #fff; font-size: 14px; font-family: 'Heebo', sans-serif; margin-bottom: 12px; }
 .property-contact input::placeholder, .property-contact textarea::placeholder { color: #666; }
 .property-contact textarea { height: 100px; resize: vertical; }
+
+/* LIGHTBOX */
 .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 99999; justify-content: center; align-items: center; }
 .lightbox.active { display: flex; }
 .lightbox img { max-width: 90%; max-height: 90vh; object-fit: contain; }
@@ -106,9 +136,11 @@ nav ul a:hover { color: #fff; }
 .lightbox-prev, .lightbox-next { position: absolute; top: 50%; transform: translateY(-50%); background: none; border: 1px solid #555; color: #fff; width: 50px; height: 50px; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 .lightbox-prev { right: 20px; }
 .lightbox-next { left: 20px; }
-.contact { padding: 100px 60px; background: #111; text-align: center; }
+
+/* CONTACT */
+.contact { padding: 100px 60px; background: var(--dark); text-align: center; }
 .contact h2 { font-size: 40px; color: #fff; margin-bottom: 15px; font-weight: 700; }
-.contact .subtitle { color: #999; margin-bottom: 50px; font-size: 14px; letter-spacing: 1px; }
+.contact .subtitle { color: var(--muted); margin-bottom: 50px; font-size: 14px; letter-spacing: 1px; }
 .contact-options { display: flex; gap: 120px; justify-content: center; flex-wrap: wrap; margin-bottom: 60px; align-items: center; }
 .contact-option a { color: #fff; font-size: 16px; font-weight: 300; text-decoration: none; display: block; margin-top: 12px; letter-spacing: 3px; text-transform: uppercase; transition: color 0.4s; }
 .contact-option .icon { font-size: 28px; opacity: 0.7; }
@@ -117,15 +149,17 @@ nav ul a:hover { color: #fff; }
 .contact input, .contact textarea { padding: 15px 20px; background: #1a1a1a; border: 1px solid #333; color: #fff; font-size: 15px; font-family: 'Heebo', sans-serif; }
 .contact input::placeholder, .contact textarea::placeholder { color: #666; }
 .contact textarea { height: 130px; resize: vertical; }
-footer { text-align: center; padding: 30px; background: #000; color: #555; border-top: 1px solid #222; font-size: 13px; letter-spacing: 1px; }
-footer a { color: #999; text-decoration: none; }
-.chat-bubble { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #111; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 8888; box-shadow: 0 4px 20px rgba(0,0,0,0.3); transition: transform 0.3s; }
+footer { text-align: center; padding: 30px; background: #000; color: var(--mid); border-top: 1px solid #222; font-size: 13px; letter-spacing: 1px; }
+footer a { color: var(--muted); text-decoration: none; }
+
+/* CHAT */
+.chat-bubble { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 8888; box-shadow: 0 4px 20px rgba(0,0,0,0.3); transition: transform 0.3s; }
 .chat-bubble:hover { transform: scale(1.1); }
 .chat-bubble svg { width: 28px; height: 28px; fill: #fff; }
 .chat-notification { position: absolute; top: -3px; right: -3px; width: 16px; height: 16px; background: #25D366; border-radius: 50%; border: 2px solid #fff; }
-.chat-window { position: fixed; bottom: 105px; right: 30px; width: 370px; height: 520px; background: #fff; border: 1px solid #eee; box-shadow: 0 10px 40px rgba(0,0,0,0.15); display: none; flex-direction: column; z-index: 8888; border-radius: 12px; overflow: hidden; }
+.chat-window { position: fixed; bottom: 105px; right: 30px; width: 370px; height: 520px; background: #fff; border: 1px solid var(--light); box-shadow: 0 10px 40px rgba(0,0,0,0.15); display: none; flex-direction: column; z-index: 8888; border-radius: 12px; overflow: hidden; }
 .chat-window.open { display: flex; }
-.chat-header { background: #111; padding: 18px 20px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.chat-header { background: var(--dark); padding: 18px 20px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
 .chat-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; }
 .chat-header-info { flex: 1; }
 .chat-header-info h4 { color: #fff; font-size: 15px; font-family: 'Playfair Display', serif; }
@@ -133,26 +167,58 @@ footer a { color: #999; text-decoration: none; }
 .chat-close { background: none; border: none; color: #aaa; font-size: 20px; cursor: pointer; }
 .chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; background: #f9f9f9; }
 .msg { max-width: 80%; padding: 12px 15px; font-size: 14px; line-height: 1.6; border-radius: 12px; }
-.msg.bot { background: #fff; color: #111; align-self: flex-start; border: 1px solid #eee; border-radius: 0 12px 12px 12px; }
-.msg.user { background: #111; color: #fff; align-self: flex-end; border-radius: 12px 0 12px 12px; }
-.msg.typing { background: #fff; border: 1px solid #eee; border-radius: 0 12px 12px 12px; align-self: flex-start; color: #999; font-style: italic; }
-.chat-input-area { padding: 15px; border-top: 1px solid #eee; display: flex; gap: 10px; background: #fff; flex-shrink: 0; }
+.msg.bot { background: #fff; color: var(--dark); align-self: flex-start; border: 1px solid var(--light); border-radius: 0 12px 12px 12px; }
+.msg.user { background: var(--dark); color: #fff; align-self: flex-end; border-radius: 12px 0 12px 12px; }
+.msg.typing { background: #fff; border: 1px solid var(--light); border-radius: 0 12px 12px 12px; align-self: flex-start; color: var(--muted); font-style: italic; }
+.chat-input-area { padding: 15px; border-top: 1px solid var(--light); display: flex; gap: 10px; background: #fff; flex-shrink: 0; }
 .chat-input { flex: 1; border: 1px solid #ddd; padding: 10px 15px; font-size: 14px; font-family: 'Heebo', sans-serif; outline: none; border-radius: 25px; }
-.chat-send { background: #111; color: #fff; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
-@media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } .property-specs { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 768px) { nav { padding: 15px 20px; } nav ul { display: none; } .hero h1 { font-size: 36px; } .about { flex-direction: column; padding: 60px 20px; gap: 30px; } .about-img { width: 100%; height: 300px; } .properties { padding: 60px 20px; } .grid { grid-template-columns: 1fr; } .contact { padding: 60px 20px; } .contact-options { gap: 40px; } .chat-window { width: calc(100vw - 20px); right: 10px; bottom: 100px; } .property-nav { padding: 15px 20px; } .property-content { padding: 30px 20px; } .gallery-main { height: 280px; } }
+.chat-send { background: var(--dark); color: #fff; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .property-specs { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  nav { padding: 15px 20px; }
+  nav ul { display: none; }
+  .hamburger { display: flex; }
+  .hero h1 { font-size: 36px; }
+  .about { flex-direction: column; padding: 60px 20px; gap: 30px; }
+  .about-img { width: 100%; height: 300px; }
+  .properties { padding: 60px 20px; }
+  .grid { grid-template-columns: 1fr; }
+  .contact { padding: 60px 20px; }
+  .contact-options { gap: 40px; }
+  .chat-window { width: calc(100vw - 20px); right: 10px; bottom: 100px; }
+  .property-nav { padding: 15px 20px; }
+  .property-content { padding: 30px 20px; }
+  .gallery-main { height: 280px; }
+}
 </style>
 </head>
 <body lang="he">
+
 <nav>
   <div class="logo">אריאל סיבוני<span>Real Estate · Remax</span></div>
   <ul>
     <li><a href="#about">אודות</a></li>
     <li><a href="#properties">נכסים</a></li>
     <li><a href="#contact">צור קשר</a></li>
-    <li><a href="https://wa.me/972535359767" class="nav-whatsapp" target="_blank">לשיחה עם אריאל</a></li>
+    <li><a href="https://wa.me/972535359767" class="nav-whatsapp" target="_blank" rel="noopener">לשיחה עם אריאל</a></li>
   </ul>
+  <button class="hamburger" id="hamburger" aria-label="תפריט">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMobileMenu()">אודות</a>
+  <a href="#properties" onclick="closeMobileMenu()">נכסים</a>
+  <a href="#contact" onclick="closeMobileMenu()">צור קשר</a>
+  <a href="https://wa.me/972535359767" target="_blank" rel="noopener">לשיחה עם אריאל בוואטסאפ</a>
+</div>
+
 <section class="hero">
   <div>
     <h1>מקום לקרוא לו בית</h1>
@@ -161,8 +227,9 @@ footer a { color: #999; text-decoration: none; }
     <a href="#properties" class="btn">לצפייה בנכסים</a>
   </div>
 </section>
+
 <section class="about" id="about">
-  <img src="ariel.png" alt="אריאל סיבוני" class="about-img">
+  <img src="ariel.png" alt="אריאל סיבוני" class="about-img" loading="lazy">
   <div class="about-text">
     <div class="divider"></div>
     <h2>אריאל סיבוני - נדל"ן ברמה אחרת</h2>
@@ -178,6 +245,7 @@ footer a { color: #999; text-decoration: none; }
     </div>
   </div>
 </section>
+
 <section class="properties" id="properties">
   <h2>נכסים מובילים למכירה</h2>
   <p class="subtitle">כל הנכסים בליווי אישי ומקצועי — עד לסגירת העסקה</p>
@@ -210,22 +278,31 @@ footer a { color: #999; text-decoration: none; }
     <div class="loading"><div class="loading-spinner"></div><p>טוען נכסים...</p></div>
   </div>
 </section>
+
 <section class="contact" id="contact">
   <h2>צור קשר</h2>
   <p class="subtitle">השאר פרטים ואריאל יחזור אליך בהקדם</p>
   <div class="contact-options">
-    <div class="contact-option"><div class="icon">📞</div><a href="tel:0535359767">053-535-9767</a></div>
-    <div class="contact-option"><img src="arielsign.png" alt="אריאל" class="contact-ariel-img"><a href="https://wa.me/972535359767" target="_blank">לשיחה עם אריאל בוואטסאפ</a></div>
+    <div class="contact-option">
+      <div class="icon">📞</div>
+      <a href="tel:0535359767">053-535-9767</a>
+    </div>
+    <div class="contact-option">
+      <img src="arielsign.png" alt="אריאל" class="contact-ariel-img" loading="lazy">
+      <a href="https://wa.me/972535359767" target="_blank" rel="noopener">לשיחה עם אריאל בוואטסאפ</a>
+    </div>
   </div>
-  <form>
-    <input type="text" placeholder="שם מלא" required>
-    <input type="tel" placeholder="טלפון" required>
-    <input type="email" placeholder="אימייל">
-    <textarea placeholder="במה אוכל לעזור?"></textarea>
-    <button class="btn-dark" type="submit">שלח פנייה</button>
+  <form id="contactForm">
+    <input type="text" id="mainName" placeholder="שם מלא" required>
+    <input type="tel" id="mainPhone" placeholder="טלפון" required>
+    <input type="email" id="mainEmail" placeholder="אימייל">
+    <textarea id="mainMsg" placeholder="במה אוכל לעזור?"></textarea>
+    <button class="btn-dark" type="submit">שלח בוואטסאפ ←</button>
   </form>
 </section>
+
 <footer><p>© 2026 אריאל סיבוני | מתווך נדל"ן | ריימקס | <a href="tel:0535359767">053-535-9767</a></p></footer>
+
 <div class="property-page" id="propertyPage">
   <div class="property-nav">
     <button class="property-back" onclick="closePropPage()">← חזרה לנכסים</button>
@@ -241,7 +318,10 @@ footer a { color: #999; text-decoration: none; }
     <div class="gallery" id="propGallery"><div class="gallery-loading">טוען תמונות...</div></div>
     <div class="property-specs" id="propSpecs"></div>
     <div class="property-description" id="propDesc"></div>
-    <div class="property-map"><h3>מיקום הנכס על המפה</h3><iframe class="map-frame" id="propMap" src="" allowfullscreen="" loading="lazy"></iframe></div>
+    <div class="property-map">
+      <h3>מיקום הנכס על המפה</h3>
+      <iframe class="map-frame" id="propMap" src="" allowfullscreen loading="lazy"></iframe>
+    </div>
     <div class="property-contact">
       <h3>מעוניינים בנכס זה?</h3>
       <p>השאירו פרטים ואריאל יחזור אליכם בהקדם</p>
@@ -252,41 +332,47 @@ footer a { color: #999; text-decoration: none; }
     </div>
   </div>
 </div>
+
 <div class="lightbox" id="lightbox">
   <button class="lightbox-close" onclick="closeLightbox()">✕</button>
   <button class="lightbox-prev" onclick="lightboxPrev()">›</button>
-  <img id="lightboxImg" src="" alt="">
+  <img id="lightboxImg" src="" alt="תמונת נכס">
   <button class="lightbox-next" onclick="lightboxNext()">‹</button>
 </div>
+
 <div class="chat-bubble" id="chatBubble">
   <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
   <div class="chat-notification"></div>
 </div>
 <div class="chat-window" id="chatWindow">
   <div class="chat-header">
-    <img src="ariel.png" alt="אריאל" class="chat-avatar">
+    <img src="ariel.png" alt="אריאל" class="chat-avatar" loading="lazy">
     <div class="chat-header-info"><h4>הבוט של אריאל 🏠</h4><span>מחובר · עונה מיד</span></div>
     <button class="chat-close" id="chatClose">✕</button>
   </div>
   <div class="chat-messages" id="chatMessages"></div>
   <div class="chat-input-area">
-    <input type="text" class="chat-input" id="chatInput" placeholder="כתוב הודעה..."/>
+    <input type="text" class="chat-input" id="chatInput" placeholder="כתוב הודעה...">
     <button class="chat-send" id="chatSend">➤</button>
   </div>
 </div>
-<script>
-var SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vStpBrNoGifPS8MAtXFziZD_xj_vAepH-3zmhj9CUB_P3k-mt4JUce94DqdASpt-c4be8JnYzXY4N2J/pub?gid=0&single=true&output=csv';
-var allProperties = [];
-var filteredProperties = [];
-var currentImages = [];
-var lightboxIndex = 0;
 
+<script>
+const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vStpBrNoGifPS8MAtXFziZD_xj_vAepH-3zmhj9CUB_P3k-mt4JUce94DqdASpt-c4be8JnYzXY4N2J/pub?gid=0&single=true&output=csv';
+const DRIVE_API_KEY = 'AIzaSyA27a-MNpbw3nZH0FhbWCnd3zYrXrmV-1c';
+const FALLBACK_IMG = 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&h=250&fit=crop';
+
+let allProperties = [];
+let filteredProperties = [];
+let currentImages = [];
+let lightboxIndex = 0;
+
+// ── CSV ──────────────────────────────────────────────
 function parseCSVRow(row) {
-  var result = [];
-  var current = '';
-  var inQuotes = false;
-  for (var i = 0; i < row.length; i++) {
-    var c = row[i];
+  const result = [];
+  let current = '';
+  let inQuotes = false;
+  for (const c of row) {
     if (c === '"') { inQuotes = !inQuotes; }
     else if (c === ',' && !inQuotes) { result.push(current); current = ''; }
     else { current += c; }
@@ -295,67 +381,58 @@ function parseCSVRow(row) {
   return result;
 }
 
-function loadProperties() {
-  fetch(SHEET_CSV)
-    .then(function(r) { return r.text(); })
-    .then(function(csv) {
-      csv = csv.replace(/\r/g, '');
-      var rows = csv.trim().split('\n');
-      var headers = rows[0].split(',').map(function(h) { return h.trim().replace(/"/g, ''); });
-      allProperties = [];
-      for (var i = 1; i < rows.length; i++) {
-        var vals = parseCSVRow(rows[i]);
-        var obj = {};
-        for (var j = 0; j < headers.length; j++) {
-          obj[headers[j]] = (vals[j] || '').trim().replace(/"/g, '');
-        }
-        if (obj['פעיל'] === 'כן' && obj['כתובת']) {
-          allProperties.push(obj);
-        }
-      }
-      populateCityFilter();
-      filteredProperties = allProperties.slice();
-      renderGrid();
-    })
-    .catch(function() {
-      document.getElementById('grid').innerHTML = '<div class="no-results">שגיאה בטעינת הנכסים.</div>';
-    });
+async function loadProperties() {
+  try {
+    const res = await fetch(SHEET_CSV);
+    const csv = (await res.text()).replace(/\r/g, '');
+    const rows = csv.trim().split('\n');
+    const headers = parseCSVRow(rows[0]).map(h => h.trim());
+    allProperties = rows.slice(1)
+      .map(row => {
+        const vals = parseCSVRow(row);
+        const obj = {};
+        headers.forEach((h, i) => { obj[h] = (vals[i] || '').trim(); });
+        return obj;
+      })
+      .filter(p => p['פעיל'] === 'כן' && p['כתובת']);
+    populateCityFilter();
+    filteredProperties = [...allProperties];
+    renderGrid();
+  } catch {
+    document.getElementById('grid').innerHTML = '<div class="no-results">שגיאה בטעינת הנכסים.</div>';
+  }
 }
 
 function populateCityFilter() {
-  var cities = [];
-  var seen = {};
-  for (var i = 0; i < allProperties.length; i++) {
-    var city = allProperties[i]['עיר'];
-    if (city && !seen[city]) { cities.push(city); seen[city] = true; }
-  }
-  var sel = document.getElementById('filterCity');
-  for (var i = 0; i < cities.length; i++) {
-    var opt = document.createElement('option');
-    opt.value = cities[i];
-    opt.textContent = cities[i];
-    sel.appendChild(opt);
-  }
+  const seen = new Set();
+  const sel = document.getElementById('filterCity');
+  allProperties.forEach(p => {
+    if (p['עיר'] && !seen.has(p['עיר'])) {
+      seen.add(p['עיר']);
+      const opt = document.createElement('option');
+      opt.value = opt.textContent = p['עיר'];
+      sel.appendChild(opt);
+    }
+  });
 }
 
+// ── Filters ──────────────────────────────────────────
 function applyFilters() {
-  var city = document.getElementById('filterCity').value;
-  var rooms = document.getElementById('filterRooms').value;
-  var price = document.getElementById('filterPrice').value;
-  var status = document.getElementById('filterStatus').value;
-  filteredProperties = allProperties.filter(function(p) {
-    if (city && p['עיר'] !== city) return false;
-    if (status && p['סטטוס'] !== status) return false;
+  const city   = document.getElementById('filterCity').value;
+  const rooms  = document.getElementById('filterRooms').value;
+  const price  = document.getElementById('filterPrice').value;
+  const status = document.getElementById('filterStatus').value;
+  filteredProperties = allProperties.filter(p => {
+    if (city   && p['עיר']    !== city)   return false;
+    if (status && p['סטטוס']  !== status) return false;
     if (rooms) {
-      var r = parseFloat(p['חדרים']);
+      const r = parseFloat(p['חדרים']);
       if (rooms === '5') { if (r < 5) return false; }
-      else { if (Math.floor(r) !== parseFloat(rooms)) return false; }
+      else               { if (Math.floor(r) !== parseFloat(rooms)) return false; }
     }
     if (price) {
-      var parts = price.split('-');
-      var min = parseFloat(parts[0]);
-      var max = parseFloat(parts[1]);
-      var pr = parseFloat(p['מחיר']);
+      const [min, max] = price.split('-').map(Number);
+      const pr = parseFloat(p['מחיר']);
       if (pr < min || pr > max) return false;
     }
     return true;
@@ -364,210 +441,260 @@ function applyFilters() {
 }
 
 function resetFilters() {
-  document.getElementById('filterCity').value = '';
-  document.getElementById('filterRooms').value = '';
-  document.getElementById('filterPrice').value = '';
-  document.getElementById('filterStatus').value = '';
-  filteredProperties = allProperties.slice();
+  ['filterCity','filterRooms','filterPrice','filterStatus'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  filteredProperties = [...allProperties];
   renderGrid();
 }
 
-document.getElementById('filterCity').addEventListener('change', applyFilters);
-document.getElementById('filterRooms').addEventListener('change', applyFilters);
-document.getElementById('filterPrice').addEventListener('change', applyFilters);
-document.getElementById('filterStatus').addEventListener('change', applyFilters);
+['filterCity','filterRooms','filterPrice','filterStatus'].forEach(id =>
+  document.getElementById(id).addEventListener('change', applyFilters)
+);
 
+// ── Helpers ──────────────────────────────────────────
 function formatPrice(price) {
-  var num = parseFloat(price);
-  if (!num) return '';
-  return '\u20AA' + num.toLocaleString('he-IL');
+  const num = parseFloat(price);
+  return num ? '₪' + num.toLocaleString('he-IL') : '';
 }
 
-function getFirstImage(driveUrl, coverUrl) {   if (coverUrl) { var cm = coverUrl.match(/[-\w]{25,}/); if (cm) return 'https://drive.google.com/thumbnail?id=' + cm[0] + '&sz=w400'; }
-  if (!driveUrl) return 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&h=250&fit=crop';
-  var match = driveUrl.match(/folders\/([^/?]+)/);
-  if (!match) return 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&h=250&fit=crop';
-  return 'https://drive.google.com/thumbnail?id=' + match[1] + '&sz=w400';
+function getFirstImage(driveUrl, coverUrl) {
+  if (coverUrl) {
+    const m = coverUrl.match(/[-\w]{25,}/);
+    if (m) return `https://drive.google.com/thumbnail?id=${m[0]}&sz=w400`;
+  }
+  if (!driveUrl) return FALLBACK_IMG;
+  const m = driveUrl.match(/folders\/([^/?]+)/);
+  return m ? `https://drive.google.com/thumbnail?id=${m[1]}&sz=w400` : FALLBACK_IMG;
 }
 
+// ── Grid ─────────────────────────────────────────────
 function renderGrid() {
-  var grid = document.getElementById('grid');
-  var counter = document.getElementById('propsCounter');
+  const grid    = document.getElementById('grid');
+  const counter = document.getElementById('propsCounter');
   if (!filteredProperties.length) {
     grid.innerHTML = '<div class="no-results">לא נמצאו נכסים</div>';
     counter.textContent = '';
     return;
   }
-  counter.textContent = 'מציג ' + filteredProperties.length + ' נכסים';
-  var html = '';
-  for (var i = 0; i < filteredProperties.length; i++) {
-    var p = filteredProperties[i];
-    var sc = p['סטטוס'] === 'להשכרה' ? 'rent' : 'sale';
-    html += '<div class="card" onclick="openProperty(' + i + ')">';
-    html += '<img class="card-img" src="' + getFirstImage(p['תמונות'], p['תמונה ראשית']) + '" alt="' + p['כתובת'] + '" onerror="this.src=\'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&h=250&fit=crop\'">';
-    html += '<div class="card-body">';
-    html += '<div class="card-badges"><span class="badge badge-' + sc + '">' + (p['סטטוס'] || 'למכירה') + '</span>';
-    if (p['עיר']) html += '<span class="badge" style="background:#f0ede6;color:#666">' + p['עיר'] + '</span>';
-    html += '</div>';
-    html += '<div class="card-title">' + p['כתובת'] + '</div>';
-    html += '<div class="card-details">';
-    if (p['חדרים']) html += '<span class="card-detail">🛏 ' + p['חדרים'] + ' חדרים</span>';
-    if (p['מטרים']) html += '<span class="card-detail">📐 ' + p['מטרים'] + ' מ"ר</span>';
-    if (p['קומה']) html += '<span class="card-detail">🏢 קומה ' + p['קומה'] + '</span>';
-    html += '</div>';
-    if (p['מחיר']) html += '<div class="card-price">' + formatPrice(p['מחיר']) + '</div>';
-    html += '<button class="card-btn">לפרטים נוספים ←</button>';
-    html += '</div></div>';
-  }
-  grid.innerHTML = html;
+  counter.textContent = `מציג ${filteredProperties.length} נכסים`;
+  grid.innerHTML = filteredProperties.map((p, i) => {
+    const sc  = p['סטטוס'] === 'להשכרה' ? 'rent' : 'sale';
+    const img = getFirstImage(p['תמונות'], p['תמונה ראשית']);
+    return `
+      <div class="card" onclick="openProperty(${i})">
+        <img class="card-img" src="${img}" alt="${p['כתובת']}" loading="lazy" onerror="this.src='${FALLBACK_IMG}'">
+        <div class="card-body">
+          <div class="card-badges">
+            <span class="badge badge-${sc}">${p['סטטוס'] || 'למכירה'}</span>
+            ${p['עיר'] ? `<span class="badge" style="background:#f0ede6;color:#666">${p['עיר']}</span>` : ''}
+          </div>
+          <div class="card-title">${p['כתובת']}</div>
+          <div class="card-details">
+            ${p['חדרים'] ? `<span class="card-detail">🛏 ${p['חדרים']} חדרים</span>` : ''}
+            ${p['מטרים'] ? `<span class="card-detail">📐 ${p['מטרים']} מ"ר</span>` : ''}
+            ${p['קומה']  ? `<span class="card-detail">🏢 קומה ${p['קומה']}</span>`  : ''}
+          </div>
+          ${p['מחיר'] ? `<div class="card-price">${formatPrice(p['מחיר'])}</div>` : ''}
+          <button class="card-btn">לפרטים נוספים ←</button>
+        </div>
+      </div>`;
+  }).join('');
 }
 
+// ── Property Page ─────────────────────────────────────
 function openProperty(index) {
-  var p = filteredProperties[index];
+  const p = filteredProperties[index];
   document.getElementById('propNavTitle').textContent = p['כתובת'];
-  document.getElementById('propTitle').textContent = p['כתובת'];
-  document.getElementById('propCity').textContent = p['עיר'] || '';
-  document.getElementById('propPrice').textContent = formatPrice(p['מחיר']);
-  var statusEl = document.getElementById('propStatus');
+  document.getElementById('propTitle').textContent    = p['כתובת'];
+  document.getElementById('propCity').textContent     = p['עיר'] || '';
+  document.getElementById('propPrice').textContent    = formatPrice(p['מחיר']);
+  const statusEl = document.getElementById('propStatus');
   statusEl.textContent = p['סטטוס'] || 'למכירה';
-  statusEl.className = 'property-status ' + (p['סטטוס'] === 'להשכרה' ? 'rent' : 'sale');
-  var specs = '';
-  if (p['חדרים']) specs += '<div class="spec"><div class="spec-icon">🛏</div><div class="spec-label">חדרים</div><div class="spec-value">' + p['חדרים'] + '</div></div>';
-  if (p['מטרים']) specs += '<div class="spec"><div class="spec-icon">📐</div><div class="spec-label">מ"ר</div><div class="spec-value">' + p['מטרים'] + '</div></div>';
-  if (p['קומה']) specs += '<div class="spec"><div class="spec-icon">🏢</div><div class="spec-label">קומה</div><div class="spec-value">' + p['קומה'] + '</div></div>';
-  if (p['כיוון']) specs += '<div class="spec"><div class="spec-icon">🧭</div><div class="spec-label">כיוון</div><div class="spec-value">' + p['כיוון'] + '</div></div>';
-  document.getElementById('propSpecs').innerHTML = specs;
-  document.getElementById('propDesc').innerHTML = p['תיאור'] ? '<h3>תיאור הנכס</h3><p>' + p['תיאור'] + '</p>' : '';
-  var mapAddr = encodeURIComponent(p['כתובת'] + ' ' + (p['עיר'] || '') + ' ישראל');
-  document.getElementById('propMap').src = 'https://maps.google.com/maps?q=' + mapAddr + '&output=embed&z=15';
+  statusEl.className   = `property-status ${p['סטטוס'] === 'להשכרה' ? 'rent' : 'sale'}`;
+  document.getElementById('propSpecs').innerHTML = [
+    p['חדרים'] && `<div class="spec"><div class="spec-icon">🛏</div><div class="spec-label">חדרים</div><div class="spec-value">${p['חדרים']}</div></div>`,
+    p['מטרים'] && `<div class="spec"><div class="spec-icon">📐</div><div class="spec-label">מ"ר</div><div class="spec-value">${p['מטרים']}</div></div>`,
+    p['קומה']  && `<div class="spec"><div class="spec-icon">🏢</div><div class="spec-label">קומה</div><div class="spec-value">${p['קומה']}</div></div>`,
+    p['כיוון'] && `<div class="spec"><div class="spec-icon">🧭</div><div class="spec-label">כיוון</div><div class="spec-value">${p['כיוון']}</div></div>`
+  ].filter(Boolean).join('');
+  document.getElementById('propDesc').innerHTML = p['תיאור']
+    ? `<h3>תיאור הנכס</h3><p>${p['תיאור']}</p>` : '';
+  const mapAddr = encodeURIComponent(`${p['כתובת']} ${p['עיר'] || ''} ישראל`);
+  document.getElementById('propMap').src = `https://maps.google.com/maps?q=${mapAddr}&output=embed&z=15`;
   loadGallery(p['תמונות']);
-  history.pushState({prop: true}, '');   document.getElementById('propertyPage').classList.add('active');
+  history.pushState({ prop: true }, '');
+  document.getElementById('propertyPage').classList.add('active');
   document.body.style.overflow = 'hidden';
   document.getElementById('propertyPage').scrollTop = 0;
 }
 
-window.addEventListener('popstate', function() { document.getElementById('propertyPage').classList.remove('active'); document.body.style.overflow = ''; document.getElementById('propMap').src = ''; }); function closePropPage() { history.back();
+function closePropPage() {
+  history.back();
+}
+
+window.addEventListener('popstate', () => {
   document.getElementById('propertyPage').classList.remove('active');
   document.body.style.overflow = '';
   document.getElementById('propMap').src = '';
-}
+});
 
-function loadGallery(driveUrl) {
-  var gallery = document.getElementById('propGallery');
+// ── Gallery ───────────────────────────────────────────
+async function loadGallery(driveUrl) {
+  const gallery = document.getElementById('propGallery');
   gallery.innerHTML = '<div class="gallery-loading">טוען תמונות...</div>';
   currentImages = [];
   if (!driveUrl) { gallery.innerHTML = '<div class="gallery-loading">אין תמונות</div>'; return; }
-  var match = driveUrl.match(/folders\/([^/?]+)/);
-  if (!match) { gallery.innerHTML = '<div class="gallery-loading">שגיאה</div>'; return; }
-  var folderId = match[1];
-  fetch('https://www.googleapis.com/drive/v3/files?q=%27' + folderId + '%27+in+parents+and+mimeType+contains+%27image%27&key=AIzaSyA27a-MNpbw3nZH0FhbWCnd3zYrXrmV-1c&fields=files(id,name)')
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      if (data.files && data.files.length > 0) {
-        currentImages = data.files.map(function(f) { return 'https://drive.google.com/thumbnail?id=' + f.id + '&sz=w1200'; });
-      } else {
-        currentImages = ['https://drive.google.com/thumbnail?id=' + folderId + '&sz=w1200'];
-      }
-      renderGallery();
-    })
-    .catch(function() {
-      currentImages = ['https://drive.google.com/thumbnail?id=' + folderId + '&sz=w1200'];
-      renderGallery();
-    });
+  const match = driveUrl.match(/folders\/([^/?]+)/);
+  if (!match)  { gallery.innerHTML = '<div class="gallery-loading">שגיאה</div>'; return; }
+  const folderId = match[1];
+  try {
+    const res  = await fetch(`https://www.googleapis.com/drive/v3/files?q=%27${folderId}%27+in+parents+and+mimeType+contains+%27image%27&key=${DRIVE_API_KEY}&fields=files(id,name)&orderBy=name`);
+    const data = await res.json();
+    currentImages = (data.files?.length > 0 ? data.files : [{ id: folderId }])
+      .map(f => `https://drive.google.com/thumbnail?id=${f.id}&sz=w1200`);
+  } catch {
+    currentImages = [`https://drive.google.com/thumbnail?id=${folderId}&sz=w1200`];
+  }
+  renderGallery();
 }
 
 function renderGallery() {
-  var gallery = document.getElementById('propGallery');
+  const gallery = document.getElementById('propGallery');
   if (!currentImages.length) { gallery.innerHTML = '<div class="gallery-loading">אין תמונות</div>'; return; }
-  var thumbs = '';
-  for (var i = 0; i < currentImages.length; i++) {
-    thumbs += '<img class="gallery-thumb ' + (i === 0 ? 'active' : '') + '" src="' + currentImages[i] + '" onclick="selectImage(' + i + ')" onerror="this.style.display=\'none\'">';
-  }
-  gallery.innerHTML = '<img class="gallery-main" id="galleryMain" src="' + currentImages[0] + '" onclick="openLightbox(0)" onerror="this.src=\'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=480&fit=crop\'"><div class="gallery-thumbs">' + thumbs + '</div>';
+  const thumbs = currentImages.map((src, i) =>
+    `<img class="gallery-thumb ${i === 0 ? 'active' : ''}" src="${src}" loading="lazy" onclick="selectImage(${i})" onerror="this.style.display='none'">`
+  ).join('');
+  gallery.innerHTML = `
+    <img class="gallery-main" id="galleryMain" src="${currentImages[0]}" onclick="openLightbox(0)" onerror="this.src='${FALLBACK_IMG}'">
+    <div class="gallery-thumbs">${thumbs}</div>`;
 }
 
 function selectImage(index) {
   document.getElementById('galleryMain').src = currentImages[index];
-  var thumbs = document.querySelectorAll('.gallery-thumb');
-  for (var i = 0; i < thumbs.length; i++) { thumbs[i].classList.toggle('active', i === index); }
+  document.querySelectorAll('.gallery-thumb').forEach((t, i) => t.classList.toggle('active', i === index));
 }
 
+// ── Lightbox ──────────────────────────────────────────
 function openLightbox(index) {
   lightboxIndex = index;
   document.getElementById('lightboxImg').src = currentImages[index];
   document.getElementById('lightbox').classList.add('active');
 }
-
 function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); }
-
+function lightboxPrev() {
+  lightboxIndex = (lightboxIndex + 1) % currentImages.length;
+  document.getElementById('lightboxImg').src = currentImages[lightboxIndex];
+}
 function lightboxNext() {
   lightboxIndex = (lightboxIndex - 1 + currentImages.length) % currentImages.length;
   document.getElementById('lightboxImg').src = currentImages[lightboxIndex];
 }
 
-function lightboxPrev() {
-  lightboxIndex = (lightboxIndex + 1) % currentImages.length;
-  document.getElementById('lightboxImg').src = currentImages[lightboxIndex];
-}
-
+// ── WhatsApp ──────────────────────────────────────────
 function sendWhatsApp() {
-  var name = document.getElementById('contactName').value;
-  var phone = document.getElementById('contactPhone').value;
-  var msg = document.getElementById('contactMsg').value;
-  var prop = document.getElementById('propTitle').textContent;
-  window.open('https://wa.me/972535359767?text=' + encodeURIComponent('שלום אריאל, אני מעוניין בנכס: ' + prop + '\nשם: ' + name + '\nטלפון: ' + phone + '\n' + msg), '_blank');
+  const name = document.getElementById('contactName').value;
+  const phone = document.getElementById('contactPhone').value;
+  const msg  = document.getElementById('contactMsg').value;
+  const prop = document.getElementById('propTitle').textContent;
+  window.open(`https://wa.me/972535359767?text=${encodeURIComponent(`שלום אריאל, אני מעוניין בנכס: ${prop}\nשם: ${name}\nטלפון: ${phone}\n${msg}`)}`, '_blank', 'noopener');
 }
 
-var SYSTEM_PROMPT = 'אתה הבוט של אריאל סיבוני, מתווך נדל"ן מוסמך ברשת ריימקס. תמיד תהיה ידידותי ומקצועי ובעברית. בסוף כל תשובה הצע ליצור קשר עם אריאל: 053-535-9767';
-var chatHistory = [];
-var chatOpen = false;
+document.getElementById('contactForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const name  = document.getElementById('mainName').value;
+  const phone = document.getElementById('mainPhone').value;
+  const msg   = document.getElementById('mainMsg').value;
+  window.open(`https://wa.me/972535359767?text=${encodeURIComponent(`שלום אריאל,\nשם: ${name}\nטלפון: ${phone}\n${msg || 'אשמח לדבר איתך!'}`)}`, '_blank', 'noopener');
+});
+
+// ── Mobile Menu ───────────────────────────────────────
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('mobileMenu').classList.toggle('open');
+});
+function closeMobileMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+// ── Chatbot (rules-based) ─────────────────────────────
+const chatRules = [
+  { keys: ['שלום','היי','הי','בוקר','ערב','מה שלומך'],
+    reply: 'שלום! 😊 אני הבוט של אריאל. מחפשים לקנות, למכור או לשכור נכס?' },
+  { keys: ['מחיר','כמה עולה','עלות','תמחור'],
+    reply: 'המחירים משתנים לפי הנכס. ניתן לראות מחיר מדויק בכל כרטיס נכס. רוצים שאריאל יישלח לכם מחירון? 📞 053-535-9767' },
+  { keys: ['חדרים','חדר'],
+    reply: 'יש לנו נכסים עם 2-5 חדרים. השתמשו בפילטר למעלה לחיפוש לפי מספר חדרים! 🛏' },
+  { keys: ['חולון'],
+    reply: 'אריאל מתמחה בחולון! יש לנו נכסים מעולים שם. ראו את הרשימה המלאה בסעיף הנכסים.' },
+  { keys: ['בת ים'],
+    reply: 'בת ים היא אחת האזורים החמות שלנו! תסתכלו על הנכסים בפילטר העיר.' },
+  { keys: ['ראשון','ראשל"צ'],
+    reply: 'ראשון לציון — אזור מבוקש! אריאל מכיר אותו כמו כף ידו. 📞 053-535-9767' },
+  { keys: ['תל אביב','תא'],
+    reply: 'תל אביב — הלב הפועם! יש לנו נכסים נבחרים שם. צרו קשר עם אריאל לפרטים.' },
+  { keys: ['בית דגן'],
+    reply: 'בית דגן — שקטה, ירוקה ובמחירים טובים! אריאל מתמחה גם שם.' },
+  { keys: ['קשר','טלפון','ליצור קשר','להתקשר'],
+    reply: 'אריאל זמין בטלפון ובוואטסאפ: 📞 053-535-9767\nלחצו "לשיחה עם אריאל" בתפריט למעלה.' },
+  { keys: ['תמונ','גלריה','לראות'],
+    reply: 'כנסו לכל נכס לצפייה בגלריית תמונות מלאה! לחצו על "לפרטים נוספים" בכרטיס הנכס.' },
+  { keys: ['מפה','מיקום','כתובת','איפה'],
+    reply: 'בכל דף נכס יש מפה מלאה עם המיקום המדויק! 📍' },
+  { keys: ['ריימקס','remax'],
+    reply: 'אריאל הוא סוכן מוסמך ברשת רימקס — אחת הרשתות הגדולות בעולם.' },
+  { keys: ['תודה','תנקס','סבבה'],
+    reply: 'בשמחה! 😊 לכל שאלה נוספת — אריאל זמין: 053-535-9767' },
+  { keys: ['למכירה','לקנות','קנייה'],
+    reply: 'יש לנו נכסים נהדרים למכירה! עברו לסעיף הנכסים וסננו לפי "למכירה".' },
+  { keys: ['להשכרה','לשכור','שכירות'],
+    reply: 'יש לנו נכסים להשכרה! עברו לסעיף הנכסים וסננו לפי "להשכרה".' },
+];
+
+let chatOpen = false;
 
 function addMsg(text, type) {
-  var msgs = document.getElementById('chatMessages');
-  var div = document.createElement('div');
-  div.className = 'msg ' + type;
+  const msgs = document.getElementById('chatMessages');
+  const div  = document.createElement('div');
+  div.className   = `msg ${type}`;
   div.textContent = text;
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
   return div;
 }
 
-function sendMessage(userText) {
-  if (!userText.trim()) return;
-  addMsg(userText, 'user');
-  chatHistory.push({ role: 'user', content: userText });
-  document.getElementById('chatInput').value = '';
-  var typingDiv = addMsg('מקליד...', 'typing');
-  fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1000, system: SYSTEM_PROMPT, messages: chatHistory })
-  }).then(function(r) { return r.json(); })
-    .then(function(data) {
-      typingDiv.remove();
-      var reply = data.content[0].text;
-      addMsg(reply, 'bot');
-      chatHistory.push({ role: 'assistant', content: reply });
-    })
-    .catch(function() {
-      typingDiv.remove();
-      addMsg('מצטער, שגיאה. התקשר ל-053-535-9767', 'bot');
-    });
+function getBotReply(text) {
+  const lower = text.toLowerCase();
+  for (const rule of chatRules) {
+    if (rule.keys.some(k => lower.includes(k))) return rule.reply;
+  }
+  return 'שאלה טובה! 😊 לתשובה מהירה דברו ישירות עם אריאל: 📞 053-535-9767 או בוואטסאפ.';
 }
 
-document.getElementById('chatBubble').addEventListener('click', function() {
+function sendChatMessage(text) {
+  if (!text.trim()) return;
+  addMsg(text, 'user');
+  document.getElementById('chatInput').value = '';
+  const typing = addMsg('...', 'typing');
+  setTimeout(() => { typing.remove(); addMsg(getBotReply(text), 'bot'); }, 600);
+}
+
+document.getElementById('chatBubble').addEventListener('click', () => {
   chatOpen = !chatOpen;
   document.getElementById('chatWindow').classList.toggle('open', chatOpen);
-  if (chatOpen && !chatHistory.length) {
-    setTimeout(function() { addMsg('שלום! 👋 אני הבוט של אריאל. איזה נכס אתה מחפש? 🏠', 'bot'); }, 300);
+  if (chatOpen && !document.getElementById('chatMessages').children.length) {
+    setTimeout(() => addMsg('שלום! 👋 אני הבוט של אריאל. איזה נכס אתה מחפש? 🏠', 'bot'), 300);
   }
 });
-document.getElementById('chatClose').addEventListener('click', function() {
+document.getElementById('chatClose').addEventListener('click', () => {
   chatOpen = false;
   document.getElementById('chatWindow').classList.remove('open');
 });
-document.getElementById('chatSend').addEventListener('click', function() { sendMessage(document.getElementById('chatInput').value); });
-document.getElementById('chatInput').addEventListener('keypress', function(e) { if (e.key === 'Enter') sendMessage(document.getElementById('chatInput').value); });
+document.getElementById('chatSend').addEventListener('click', () =>
+  sendChatMessage(document.getElementById('chatInput').value)
+);
+document.getElementById('chatInput').addEventListener('keypress', e => {
+  if (e.key === 'Enter') sendChatMessage(document.getElementById('chatInput').value);
+});
 
 loadProperties();
 </script>
